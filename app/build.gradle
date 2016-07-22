@@ -27,6 +27,4 @@ dependencies {
     compile supportDependencies.annotation
     compile supportDependencies.support
     compile project(':advancedtoolbar')
-   // compile 'com.hkm.advancedtoolbar:advancedtoolbar:0.5.1'
-   // compile 'com.hkm.advancedtoolbar:advancedtoolbar:0.4.6'
 }

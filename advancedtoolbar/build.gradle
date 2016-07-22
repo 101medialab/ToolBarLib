@@ -10,6 +10,14 @@ android {
         versionName project.VERSION_NAME
     }
     buildTypes {
+        libraryVariants.all { variant ->
+            variant.outputs.each { output ->
+                def filename = output.outputFile.name
+                filename = filename.replace('library-', 'advancedtoolbar-').replace('.aar', '-' + defaultConfig.versionName + '.aar')
+                output.outputFile = new File(output.outputFile.parent, filename)
+            }
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
