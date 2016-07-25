@@ -281,6 +281,10 @@ public class MaterialSearchView extends SearchViewBase {
     }
 
     private boolean isVoiceAvailable() {
+        if (isInEditMode()) {
+            return false;
+        }
+
         PackageManager pm = getContext().getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(
                 new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
