@@ -1,8 +1,7 @@
 package com.hkm.advancedtoolbar.socialbar;
 
 import android.annotation.TargetApi;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +13,10 @@ import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.hkm.advancedtoolbar.R;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 

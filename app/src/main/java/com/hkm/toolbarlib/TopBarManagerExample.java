@@ -89,7 +89,7 @@ public class TopBarManagerExample extends AppCompatActivity {
 
         social = (combar) findViewById(R.id.social_bar_component);
         social
-                .connectAlert(getFragmentManager())
+                .connectAlert(getSupportFragmentManager())
                 .setShareContent(
                         "Share item now",
                         "This is the best to share the items",

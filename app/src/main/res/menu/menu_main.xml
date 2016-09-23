@@ -12,7 +12,7 @@
     <item
         android:id="@+id/item_samplebadge"
         android:title="txt"
-        app:actionLayout="@layout/menu_badge"
+        app:actionLayout="@layout/menu_action_item_badge"
         app:showAsAction="always" />
 
 </menu>
