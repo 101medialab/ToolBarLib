@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_search"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/sub"
         app:showAsAction="ifRoom" />
     <item
