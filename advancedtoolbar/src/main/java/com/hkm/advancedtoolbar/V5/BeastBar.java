@@ -3,11 +3,13 @@ package com.hkm.advancedtoolbar.V5;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -277,10 +279,7 @@ public class BeastBar {
         }
 
         if (setup.ic_company != 0) {
-            mImage.setImageResource(setup.ic_company);
-            mtv.setVisibility(View.INVISIBLE);
-            isCompanyLogoShown = true;
-            isTitleShown = false;
+            setLogoDrawableResource(setup.ic_company);
         }
 
         if (setup.title_default != null) {
@@ -332,6 +331,25 @@ public class BeastBar {
             layout.getViewTreeObserver().removeGlobalOnLayoutListener(lb);
         }
         mtv.setMaxWidth(size.x - leftSide - rightSide);
+    }
+
+    public void setLogoDrawableResource(@DrawableRes int resourceId) {
+        mImage.setImageResource(resourceId);
+        mtv.setVisibility(View.INVISIBLE);
+        isCompanyLogoShown = true;
+        isTitleShown = false;
+    }
+
+    public void setLogoDrawable(Drawable resource) {
+        mImage.setImageDrawable(resource);
+        mtv.setVisibility(View.INVISIBLE);
+        isCompanyLogoShown = true;
+        isTitleShown = false;
+    }
+
+    public void setLogoOnClickListener(View.OnClickListener onClickListener) {
+        mImage.setClickable(true);
+        mImage.setOnClickListener(onClickListener);
     }
 
     public BeastBar setFindIconFunc(@Nullable final onButtonPressListener func) {
