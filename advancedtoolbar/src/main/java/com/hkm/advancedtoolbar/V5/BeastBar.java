@@ -333,6 +333,10 @@ public class BeastBar {
         mtv.setMaxWidth(size.x - leftSide - rightSide);
     }
 
+    public ImageView getLogoImageView() {
+        return mImage;
+    }
+
     public void setLogoDrawableResource(@DrawableRes int resourceId) {
         mImage.setImageResource(resourceId);
         mtv.setVisibility(View.INVISIBLE);
