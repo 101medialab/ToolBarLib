@@ -1,6 +1,7 @@
 package com.hkm.advancedtoolbar.socialbar;
 
 import android.annotation.TargetApi;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,13 +12,13 @@ import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hkm.advancedtoolbar.R;
 
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -25,11 +26,13 @@ import java.util.List;
  * Created by hesk on 24/7/15.
  */
 public class combar extends FrameLayout implements View.OnClickListener {
-    private Context rescontext;
-    private List<ResolveInfo> list;
-    private String confirm_context_except = "nothing in here";
+    private static final String TAG = combar.class.getSimpleName();
+    private Context context;
+    private List<ResolveInfo> resolveInfoList;
+    private String contextExcerpt = "nothing in here";
+    protected String shareLink = "";
     private String title = "New discovery";
-    private FragmentManager frag;
+    private FragmentManager fragmentManager;
 
     public combar(Context context) {
         super(context);
@@ -47,18 +50,29 @@ public class combar extends FrameLayout implements View.OnClickListener {
     }
 
     private void init(Context cont) {
-        View con = getView(cont, R.layout.socialbar);
-        rescontext = cont;
-        list = getList();
-        con.findViewById(Hg.facebook.Id()).setOnClickListener(this);
-        con.findViewById(Hg.message.Id()).setOnClickListener(this);
-        con.findViewById(Hg.whatsapp.Id()).setOnClickListener(this);
-        con.findViewById(Hg.pintrest.Id()).setOnClickListener(this);
-        con.findViewById(Hg.twitter.Id()).setOnClickListener(this);
+        View rootView = getView(cont, R.layout.socialbar);
+        context = cont;
+        resolveInfoList = getSharingAppList();
+        rootView.findViewById(Hg.facebook.Id()).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareByFacebook();
+            }
+        });
+        rootView.findViewById(Hg.message.Id()).setOnClickListener(this);
+        rootView.findViewById(Hg.whatsapp.Id()).setOnClickListener(this);
+        rootView.findViewById(Hg.pintrest.Id()).setOnClickListener(this);
+        rootView.findViewById(Hg.twitter.Id()).setOnClickListener(this);
+        rootView.findViewById(R.id.social_bar_mail).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareByEmail();
+            }
+        });
     }
 
     public combar connectAlert(FragmentManager fragmentm) {
-        this.frag = fragmentm;
+        this.fragmentManager = fragmentm;
         return this;
     }
 
@@ -74,10 +88,13 @@ public class combar extends FrameLayout implements View.OnClickListener {
     }
 
     public combar setShareContent(String title, String except, String link) {
+        this.title = title;
+        shareLink = link;
         if (template == null) {
-            confirm_context_except = "I just read an article about " + title + ", check it out @ " + link;
+            contextExcerpt = "I just read an article about " + title + ", check it out @ " + link;
         } else {
-            confirm_context_except = String.format(template, title, except, link);
+
+            contextExcerpt = String.format(template, title, except, link);
         }
         return this;
     }
@@ -91,48 +108,46 @@ public class combar extends FrameLayout implements View.OnClickListener {
     public void onClick(View v) {
         try {
             Hg instance_icon = Hg.reverseId(v.getId());
-            int app_location = packagenameexist(instance_icon);
+            int app_location = getPackageNameIndex(instance_icon);
+            Log.d(TAG, String.format("appLocation=%d", app_location));
             if (app_location > -1) {
                 share(app_location);
             } else {
-                instance_icon.alert(frag, rescontext);
+                instance_icon.alert(fragmentManager, context);
             }
 
         } catch (Exception e) {
-
+            Log.e(TAG, "failed to process share request", e);
         }
     }
 
-    private void shareAppLinkViaFacebook(String packagename) {
-        if (!packagename.equalsIgnoreCase(Hg.facebook.getPackageName())) {
-            return;
-        }
-        /*String urlToShare = "YOUR_URL";
-
+    private void shareByFacebook() {
         try {
             Intent intent1 = new Intent();
-            intent1.setClassName("com.facebook.katana", "com.facebook.katana.activity.composer.ImplicitShareIntentHandler");
+            //intent1.setClassName("com.facebook.katana", "com.facebook.katana.activity.composer.ImplicitShareIntentHandler");
+            intent1.setPackage("com.facebook.katana");
             intent1.setAction("android.intent.action.SEND");
             intent1.setType("text/plain");
-            intent1.putExtra("android.intent.extra.TEXT", urlToShare);
-            startActivity(intent1);
+            intent1.putExtra("android.intent.extra.TEXT", shareLink);
+            context.startActivity(intent1);
         } catch (Exception e) {
+            Log.w(TAG, "failed to launch facebook, fallback to sharing via web", e);
             // If we failed (not native FB app installed), try share through SEND
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + urlToShare;
+            String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + shareLink;
             intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
-            startActivity(intent);
-        }*/
+            context.startActivity(intent);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void share(final int position_app) {
-        ActivityInfo activity = list.get(position_app).activityInfo;
+        ActivityInfo activity = resolveInfoList.get(position_app).activityInfo;
         ComponentName nameComponent = new ComponentName(activity.applicationInfo.packageName, activity.name);
 
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, confirm_context_except);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, contextExcerpt);
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
         Intent newIntent = (Intent) shareIntent.clone();
         //| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
@@ -140,25 +155,31 @@ public class combar extends FrameLayout implements View.OnClickListener {
         newIntent.setComponent(nameComponent);
         newIntent.setPackage(activity.packageName);
 
-        rescontext.startActivity(newIntent);
+        context.startActivity(newIntent);
     }
 
-    private int packagenameexist(final Hg compareHg) {
-        Iterator<ResolveInfo> ipm = list.iterator();
-        int g = 0;
-        while (ipm.hasNext()) {
-            ResolveInfo h = ipm.next();
-            if (h.activityInfo.applicationInfo.packageName.contains(compareHg.getPackageName())) {
-                return g;
+    protected void shareByEmail() {
+        Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
+        mailIntent.setData(Uri.parse("mailto:"));
+        mailIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+        mailIntent.putExtra(Intent.EXTRA_TEXT, contextExcerpt);
+        context.startActivity(Intent.createChooser(mailIntent, title));
+    }
+
+    private int getPackageNameIndex(final Hg compareHg) {
+        for (int idx = 0; idx< resolveInfoList.size(); idx++) {
+            ResolveInfo resolveInfo = resolveInfoList.get(idx);
+            if (resolveInfo.activityInfo.applicationInfo.packageName.contains(compareHg.getPackageName())) {
+                return idx;
             }
-            g++;
         }
+
         return -1;
     }
 
-    private List<ResolveInfo> getList() {
+    private List<ResolveInfo> getSharingAppList() {
 
-        final PackageManager pm = rescontext.getPackageManager();
+        final PackageManager pm = context.getPackageManager();
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, "action shared");
