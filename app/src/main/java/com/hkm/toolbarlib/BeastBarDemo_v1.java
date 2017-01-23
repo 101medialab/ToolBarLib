@@ -24,7 +24,7 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.general);
         Toolbar temp = (Toolbar) findViewById(R.id.toolbar);
         combar cBar = (combar) findViewById(R.id.social_bar_component);
-        cBar.setShareContent("exiting news", "this is the bredf", "http://www.popbee.com");
+        cBar.setShareContent("exiting news", "New Android has been released!!!", "http://www.android.com");
         BeastBar.Builder bb = new BeastBar.Builder();
         bb.back(R.drawable.ic_m_back);
         bb.companyIcon(R.drawable.starz_logo);
