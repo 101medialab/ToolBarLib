@@ -113,6 +113,7 @@ public class combar extends FrameLayout implements View.OnClickListener {
             if (app_location > -1) {
                 share(app_location);
             } else {
+                Log.e(TAG, String.format("the application is not installed; app_location = %d", app_location));
                 instance_icon.alert(fragmentManager, context);
             }
 
