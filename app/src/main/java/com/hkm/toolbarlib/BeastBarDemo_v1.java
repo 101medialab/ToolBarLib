@@ -68,6 +68,8 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         Button bs = (Button) findViewById(R.id.b_search); //other function
         Button search_off = (Button) findViewById(R.id.search_off); //other function
         Button search_on = (Button) findViewById(R.id.search_on); //other function
+        Button show_yourfeed = (Button) findViewById(R.id.show_your_feed);//test your feed toolbar icon
+        Button hide_yourfeed = (Button) findViewById(R.id.hide_your_feed);
         bx.setText("close this App");
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
@@ -78,6 +80,8 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         bs.setOnClickListener(this);
         search_off.setOnClickListener(this);
         search_on.setOnClickListener(this);
+        show_yourfeed.setOnClickListener(this);
+        hide_yourfeed.setOnClickListener(this);
         toolbar.setFindIconFunc(new ButtonCon());
     }
 
@@ -136,6 +140,11 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
             case R.id.search_off:
                 toolbar.setFindIconFunc(null);
                 break;
+            case R.id.show_your_feed:
+                toolbar.showYourFeedButton();
+                break;
+            case R.id.hide_your_feed:
+                toolbar.hideYourFeedButton();
         }
     }
 }

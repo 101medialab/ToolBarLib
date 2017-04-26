@@ -44,7 +44,7 @@ public class BeastBar {
     private ImageView mImage;
     private RelativeLayout mBackground;
     private LinearLayout mRightContainer, mLeftContainer;
-    private ImageButton mSearchButton, mTopLeftButton;
+    private ImageButton mSearchButton, mTopLeftButton, mYourFeedButton;
     private Runnable mFindFunction;
     private Animation
             main_logo_in,
@@ -62,7 +62,7 @@ public class BeastBar {
 
     public static class Builder {
         private int
-                ic_company, ic_search, ic_back, ic_background,
+                ic_company, ic_search, ic_back, ic_background, ic_yourfeed,
                 tb_textsize = 0, tb_title_color = 0, title_line_config = 1,
                 animation_duration_logo = -1,
                 animation_duration = -1;
@@ -97,6 +97,11 @@ public class BeastBar {
 
         public Builder back(@DrawableRes final int res) {
             this.ic_back = res;
+            return this;
+        }
+
+        public Builder yourFeedIcon(@DrawableRes final int res) {
+            this.ic_yourfeed = res;
             return this;
         }
 
@@ -230,6 +235,7 @@ public class BeastBar {
         mImage = (ImageView) v.findViewById(R.id.logo_k);
         mSearchButton = (ImageButton) v.findViewById(R.id.ios_find_icon);
         mTopLeftButton = (ImageButton) v.findViewById(R.id.ios_back_button);
+        mYourFeedButton = (ImageButton) v.findViewById(R.id.yourfeed_button);
         this.container.addView(v);
         main_logo_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
         main_logo_out = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getOutAnimation());
@@ -267,6 +273,7 @@ public class BeastBar {
             mtv.setSingleLine(false);
             mtv.setMaxLines(setup.title_line_config);
         }
+        mYourFeedButton.setVisibility(View.INVISIBLE);
 
         if (setup.tb_textsize > 0) {
             mtv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(setup.tb_textsize));
@@ -292,6 +299,10 @@ public class BeastBar {
 
         if (setup.ic_back != 0) {
             mTopLeftButton.setImageResource(setup.ic_back);
+        }
+
+        if (setup.ic_yourfeed != 0) {
+            mYourFeedButton.setImageResource(setup.ic_yourfeed);
         }
 
         mLeftContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -324,6 +335,7 @@ public class BeastBar {
         final displayManagement dm = new displayManagement(b, withAnimation, mSearchButton);
     }
 
+
     private void removeLayoutListener(View layout, ViewTreeObserver.OnGlobalLayoutListener lb) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             layout.getViewTreeObserver().removeOnGlobalLayoutListener(lb);
@@ -354,6 +366,46 @@ public class BeastBar {
     public void setLogoOnClickListener(View.OnClickListener onClickListener) {
         mImage.setClickable(true);
         mImage.setOnClickListener(onClickListener);
+    }
+
+    public BeastBar toggleYourFeedButton() {
+        if (mYourFeedButton.getVisibility() == View.GONE) {
+            mayCancelAnimation(mYourFeedButton);
+            back_in_from_right.setAnimationListener(new ListenerAnimation() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mYourFeedButton.setVisibility(View.VISIBLE);
+
+                }
+            });
+            mYourFeedButton.startAnimation(back_in_from_right);
+        } else {
+            mayCancelAnimation(mYourFeedButton);
+            back_out.setAnimationListener(new ListenerAnimation() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mYourFeedButton.setVisibility(View.INVISIBLE);
+
+                }
+            });
+            mYourFeedButton.startAnimation(back_out);
+        }
+        return this;
+    }
+
+    public BeastBar hideYourFeedButton() {
+        mYourFeedButton.setVisibility(View.INVISIBLE);
+        return this;
+    }
+
+    public BeastBar showYourFeedButton() {
+        mYourFeedButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    public BeastBar setYourFeedOnClickListener(View.OnClickListener listener) {
+        mYourFeedButton.setOnClickListener(listener);
+        return this;
     }
 
     public BeastBar setFindIconFunc(@Nullable final onButtonPressListener func) {
