@@ -1,6 +1,7 @@
 package com.hkm.advancedtoolbar.V3.layout;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -29,13 +31,13 @@ import com.hkm.advancedtoolbar.R;
 /**
  * Created by hesk on 16/7/15.
  */
-public class SearchCustom<TV extends TextView, EditT extends EditText> implements TextWatcher, TextView.OnEditorActionListener, View.OnClickListener {
+public class SearchCustom implements TextWatcher, TextView.OnEditorActionListener, View.OnClickListener {
 
     private String default_placeholder = "Search on Hypebeast";
     private ImageView wrappedSearchCloseBtn, searchMagnifyIcon;
-    private EditT wrappedEditText;
+    private EditText wrappedEditText;
     private commonSearchBarMgr searchListener;
-    private TV searchTextHint;
+    private TextView searchTextHint;
     private ActionBar control;
     private RelativeLayout rl;
     private final Runnable fadeInDone = new Runnable() {
@@ -87,11 +89,9 @@ public class SearchCustom<TV extends TextView, EditT extends EditText> implement
         SHOW_KEYBOARD_AFTER_ANIMATION
     }
 
-    private behavior keyboard_prioity;
-
     public SearchCustom(View getcustomview) {
         getview = getcustomview;
-        wrappedEditText = (EditT) getcustomview.findViewById(R.id.ios_actionbar_wrapped_search);
+        wrappedEditText = (EditText) getcustomview.findViewById(R.id.ios_actionbar_wrapped_search);
         wrappedEditText.addTextChangedListener(this);
         wrappedEditText.setOnEditorActionListener(this);
         wrappedSearchCloseBtn = (ImageView) getcustomview.findViewById(R.id.ios_search_close_btn);
@@ -99,7 +99,6 @@ public class SearchCustom<TV extends TextView, EditT extends EditText> implement
         wrappedSearchCloseBtn.setOnClickListener(this);
         wrappedEditText.setEnabled(false);
         wrappedSearchCloseBtn.setEnabled(false);
-        keyboard_prioity = behavior.SHOW_KEYBOARD_AFTER_ANIMATION;
         rl = (RelativeLayout) getcustomview.findViewById(R.id.ios_layout_wrapper);
         rl.setAlpha(0f);
         rl.animate().alpha(1f).withEndAction(fadeInDone);
@@ -110,7 +109,7 @@ public class SearchCustom<TV extends TextView, EditT extends EditText> implement
 
     @SuppressLint("WrongViewCast")
     protected void revealWithAnimation(boolean bool) {
-        searchTextHint = (TV) getview.findViewById(R.id.ios_hinting);
+        searchTextHint = (TextView) getview.findViewById(R.id.ios_hinting);
         if (bool) {
             final Animation anim = AnimationUtils.loadAnimation(getview.getContext(), R.anim.slidefromright);
             anim.setAnimationListener(new Animation.AnimationListener() {
@@ -152,7 +151,7 @@ public class SearchCustom<TV extends TextView, EditT extends EditText> implement
      *
      * @return the customized edit text field
      */
-    public EditT getSearchField() {
+    public EditText getSearchField() {
         return wrappedEditText;
     }
 
@@ -204,8 +203,11 @@ public class SearchCustom<TV extends TextView, EditT extends EditText> implement
         if (e.getId() == R.id.ios_search_close_btn) {
             if (searchListener != null) {
                 hidekeyboard();
-                if (control != null)
-                    control.invalidateOptionsMenu();
+                if (control != null) {
+                    if (mcontext instanceof Activity) {
+                        ActivityCompat.invalidateOptionsMenu((Activity)mcontext);
+                    }
+                }
                 searchListener.onRestoreToNormal(control);
             }
         }

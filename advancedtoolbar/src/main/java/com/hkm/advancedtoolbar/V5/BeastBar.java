@@ -66,6 +66,7 @@ public class BeastBar {
                 tb_textsize = 0, tb_title_color = 0, title_line_config = 1,
                 animation_duration_logo = -1,
                 animation_duration = -1;
+        private Drawable companyIconDrawable = null;
         private Typeface typeface;
         private String title_default;
         private boolean enable_logo_anim = true;
@@ -80,8 +81,15 @@ public class BeastBar {
             return this;
         }
 
+        public Builder setCompanyIconDrawable(Drawable companyIconDrawable) {
+            this.companyIconDrawable = companyIconDrawable;
+            this.ic_company = 0;
+            return this;
+        }
+
         public Builder companyIcon(@DrawableRes final int res) {
             this.ic_company = res;
+            this.companyIconDrawable = null;
             return this;
         }
 
@@ -167,11 +175,9 @@ public class BeastBar {
         ActionBar actionbar = res.getSupportActionBar();
         actionbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionbar.setDisplayShowHomeEnabled(false);
-        actionbar.setDefaultDisplayHomeAsUpEnabled(false);
+        actionbar.setDisplayHomeAsUpEnabled(false);
         original.setBackgroundResource(beastbuilder.ic_background);
-        View homeIcon = res.findViewById(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.id.home : android.R.id.home);
-        // ((View) homeIcon.getParent()).setLayoutParams(new LinearLayout.LayoutParams(0, 0));
-        //  ((View) homeIcon).setVisibility(View.GONE);
+
         final BeastBar bb = new BeastBar(res);
         bb.setToolBar(original);
         bb.setup = beastbuilder;
@@ -285,7 +291,9 @@ public class BeastBar {
             isSearchButtonShown = true;
         }
 
-        if (setup.ic_company != 0) {
+        if (setup.companyIconDrawable != null) {
+            setLogoDrawable(setup.companyIconDrawable);
+        } else if (setup.ic_company != 0) {
             setLogoDrawableResource(setup.ic_company);
         }
 
