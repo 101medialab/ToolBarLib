@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -23,9 +21,9 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,8 +41,10 @@ public class BeastBar {
     private TextView mtv;
     private ImageView mImage;
     private RelativeLayout mBackground;
-    private LinearLayout mRightContainer, mLeftContainer;
-    private ImageButton mSearchButton, mTopLeftButton, mYourFeedButton;
+    private FrameLayout leftBarButtonContainer, rightBarButtonContainer;
+    private TextView leftBarButtonLabel, rightBarButtonLabel;
+    private ImageView leftBarButtonImageView, rightBarButtonImageView;
+    private ImageButton mYourFeedButton;
     private Runnable mFindFunction;
     private Animation
             main_logo_in,
@@ -234,13 +234,15 @@ public class BeastBar {
         isBackButtonShown = false;
         isSearchButtonShown = false;
         View v = LayoutInflater.from(mContext).inflate(R.layout.beastbar, null, false);
-        mLeftContainer = (LinearLayout) v.findViewById(R.id.left_container);
+        leftBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
         mBackground = (RelativeLayout) v.findViewById(R.id.ios_background);
-        mRightContainer = (LinearLayout) v.findViewById(R.id.right_container);
+        rightBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
+        leftBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
+        rightBarButtonLabel = (TextView) v.findViewById(R.id.right_bar_button_label);
         mtv = (TextView) v.findViewById(R.id.ios_actionbar_title);
         mImage = (ImageView) v.findViewById(R.id.logo_k);
-        mSearchButton = (ImageButton) v.findViewById(R.id.ios_find_icon);
-        mTopLeftButton = (ImageButton) v.findViewById(R.id.ios_back_button);
+        rightBarButtonImageView = (ImageView) v.findViewById(R.id.right_bar_button_image_button);
+        leftBarButtonImageView = (ImageView) v.findViewById(R.id.left_bar_button_image_view);
         mYourFeedButton = (ImageButton) v.findViewById(R.id.yourfeed_button);
         this.container.addView(v);
         main_logo_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
@@ -272,7 +274,7 @@ public class BeastBar {
         if (setup.typeface != null) {
             mtv.setTypeface(setup.typeface);
         }
-        mTopLeftButton.setVisibility(View.INVISIBLE);
+        leftBarButtonContainer.setVisibility(View.INVISIBLE);
         if (setup.title_line_config == SINGLELINE) {
             mtv.setSingleLine(true);
         } else {
@@ -287,7 +289,7 @@ public class BeastBar {
         mtv.requestLayout();
 
         if (setup.ic_search != 0) {
-            mSearchButton.setImageResource(setup.ic_search);
+            setRightBarButtonIcon(setup.ic_search);
             isSearchButtonShown = true;
         }
 
@@ -306,26 +308,26 @@ public class BeastBar {
         }
 
         if (setup.ic_back != 0) {
-            mTopLeftButton.setImageResource(setup.ic_back);
+            setLeftBarButtonIcon(setup.ic_back);
         }
 
         if (setup.ic_yourfeed != 0) {
             mYourFeedButton.setImageResource(setup.ic_yourfeed);
         }
 
-        mLeftContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        leftBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                leftSide = mLeftContainer.getWidth();
-                removeLayoutListener(mLeftContainer, this);
+                leftSide = leftBarButtonContainer.getWidth();
+                removeLayoutListener(leftBarButtonContainer, this);
             }
         });
 
-        mRightContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        rightBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                rightSide = mRightContainer.getWidth();
-                removeLayoutListener(mRightContainer, this);
+                rightSide = rightBarButtonContainer.getWidth();
+                removeLayoutListener(rightBarButtonContainer, this);
             }
         });
 
@@ -340,7 +342,7 @@ public class BeastBar {
     }
 
     public void displayRightFirstIcon(boolean b, boolean withAnimation) {
-        final displayManagement dm = new displayManagement(b, withAnimation, mSearchButton);
+        final displayManagement dm = new displayManagement(b, withAnimation, rightBarButtonContainer);
     }
 
 
@@ -420,30 +422,30 @@ public class BeastBar {
         if (func == null) {
             if (isSearchButtonShown) {
                 isSearchButtonShown = false;
-                mayCancelAnimation(mSearchButton);
+                mayCancelAnimation(rightBarButtonContainer);
                 back_out_to_right.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        mSearchButton.setVisibility(View.INVISIBLE);
+                        rightBarButtonContainer.setVisibility(View.INVISIBLE);
                     }
                 });
-                mSearchButton.startAnimation(back_out_to_right);
-                mSearchButton.setOnClickListener(null);
+                rightBarButtonContainer.startAnimation(back_out_to_right);
+                rightBarButtonContainer.setOnClickListener(null);
             }
         } else {
             if (!isSearchButtonShown) {
                 isSearchButtonShown = true;
-                mayCancelAnimation(mSearchButton);
+                mayCancelAnimation(rightBarButtonContainer);
                 back_in_from_right.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        mSearchButton.setVisibility(View.VISIBLE);
+                        rightBarButtonContainer.setVisibility(View.VISIBLE);
 
                     }
                 });
-                mSearchButton.startAnimation(back_in_from_right);
+                rightBarButtonContainer.startAnimation(back_in_from_right);
             }
-            mSearchButton.setOnClickListener(new View.OnClickListener() {
+            rightBarButtonContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     func.onSearchPress();
@@ -525,11 +527,11 @@ public class BeastBar {
 
     /* search button visibility */
     public void showSearchButton() {
-        mSearchButton.setVisibility(View.VISIBLE);
+        rightBarButtonContainer.setVisibility(View.VISIBLE);
     }
 
     public void hideSearchButton() {
-        mSearchButton.setVisibility(View.GONE);
+        rightBarButtonContainer.setVisibility(View.GONE);
     }
 
     public boolean isBackButtonShown() {
@@ -548,41 +550,81 @@ public class BeastBar {
         return isSearchButtonShown;
     }
 
-    public BeastBar setBackIconFunc(@Nullable final onButtonPressListener func) {
-        if (func == null) {
+    public BeastBar setLeftBarButtonText(String buttonText) {
+        leftBarButtonLabel.setText(buttonText);
+        return this;
+    }
+
+    public BeastBar setLeftBarButtonIcon(@DrawableRes int resId) {
+        leftBarButtonImageView.setImageResource(resId);
+        return this;
+    }
+
+    public BeastBar setLeftBarButtonIcon(Drawable drawable) {
+        leftBarButtonImageView.setImageDrawable(drawable);
+        return this;
+    }
+
+    /**
+     * Deprecated, use setLeftBarButtonOnClickListener(onClickListener) instead
+     * @param onClickListener
+     * @return
+     */
+    @Deprecated
+    public BeastBar setBackIconFunc(@Nullable final onButtonPressListener onClickListener) {
+        return setLeftBarButtonOnClickListener(onClickListener);
+    }
+
+    public BeastBar setLeftBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
+        if (onClickListener == null) {
             if (isBackButtonShown) {
                 isBackButtonShown = false;
-                mayCancelAnimation(mTopLeftButton);
+                mayCancelAnimation(leftBarButtonImageView);
                 back_out.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        mTopLeftButton.setVisibility(View.INVISIBLE);
+                        leftBarButtonContainer.setVisibility(View.INVISIBLE);
 
                     }
                 });
-                mTopLeftButton.startAnimation(back_out);
-                mTopLeftButton.setOnClickListener(null);
+                leftBarButtonContainer.startAnimation(back_out);
+                leftBarButtonContainer.setOnClickListener(null);
             }
         } else {
             if (!isBackButtonShown) {
                 isBackButtonShown = true;
-                mayCancelAnimation(mTopLeftButton);
+                mayCancelAnimation(leftBarButtonImageView);
                 back_in.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        mTopLeftButton.setVisibility(View.VISIBLE);
+                        leftBarButtonContainer.setVisibility(View.VISIBLE);
 
                     }
                 });
-                mTopLeftButton.startAnimation(back_in);
+                leftBarButtonContainer.startAnimation(back_in);
             }
-            mTopLeftButton.setOnClickListener(new View.OnClickListener() {
+            leftBarButtonContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    func.onBackPress(titlePopBack());
+                    onClickListener.onBackPress(titlePopBack());
                 }
             });
         }
+        return this;
+    }
+
+    public BeastBar setRightBarButtonText(String buttonText) {
+        rightBarButtonLabel.setText(buttonText);
+        return this;
+    }
+
+    public BeastBar setRightBarButtonIcon(@DrawableRes int resId) {
+        rightBarButtonImageView.setImageResource(resId);
+        return this;
+    }
+
+    public BeastBar setRightBarButtonIcon(Drawable drawable) {
+        rightBarButtonImageView.setImageDrawable(drawable);
         return this;
     }
 

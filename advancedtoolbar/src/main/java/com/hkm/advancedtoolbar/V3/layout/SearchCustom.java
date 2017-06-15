@@ -84,18 +84,13 @@ public class SearchCustom implements TextWatcher, TextView.OnEditorActionListene
         }
     }
 
-    enum behavior {
-        SHOW_KEYBOARD_BEFORE_ANIMATION,
-        SHOW_KEYBOARD_AFTER_ANIMATION
-    }
-
     public SearchCustom(View getcustomview) {
         getview = getcustomview;
         wrappedEditText = (EditText) getcustomview.findViewById(R.id.ios_actionbar_wrapped_search);
         wrappedEditText.addTextChangedListener(this);
         wrappedEditText.setOnEditorActionListener(this);
         wrappedSearchCloseBtn = (ImageView) getcustomview.findViewById(R.id.ios_search_close_btn);
-        searchMagnifyIcon = (ImageView) getcustomview.findViewById(R.id.ios_find_icon);
+        searchMagnifyIcon = (ImageView) getcustomview.findViewById(R.id.right_bar_button_image_button);
         wrappedSearchCloseBtn.setOnClickListener(this);
         wrappedEditText.setEnabled(false);
         wrappedSearchCloseBtn.setEnabled(false);

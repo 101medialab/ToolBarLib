@@ -3,23 +3,16 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ToolBarLib-brightgreen.svg?style=flat)][4]
 [![Download](https://api.bintray.com/packages/jjhesk/maven/advancedtoolbar/images/download.svg) ][5]
 
+# Table of Contents
+  - [Introduction](#introduction)
+  - [Usage](#usage)
+    - [Setup](#setup)
+    - [Implementation](#implementation)
+    - [Layout Attributes](#layout-attributes)
+  - [Examples](#examples)
+  - [ChangeLogs](#changelogs)
 
-
-```gradle
-
-dependencies {
-    compile 'com.hkm.ui:advancedtoolbar:0.8.0'
-}
-
-```
-
-
-##setup this gradle only stores at 
-```gradle
-repositories {
-    maven {  url "http://dl.bintray.com/jjhesk/maven"  }
-}
-```
+# Introduction
 Android ActionBar Advanced Support Library for API v23, v22, v21, v19. This library gives a better hand to handle all sorts of interactions on the toolbar. There are various built-in API and methods to speed up the development and design requirements and implemenations. There are fundamental design patterns are ready to be explored. The features listed as below:
 
 - automatic show and hide softkeyboard
@@ -32,9 +25,9 @@ Android ActionBar Advanced Support Library for API v23, v22, v21, v19. This libr
 - title shown as single line or more than single line
 - Custom call back `onButtonPressListener`
 
-Project Website: [TOOLBARLIB][2]
+Project Website: [101medialab/android-toolbarlib](https://github.com/101medialab/android-toolbarlib)
 
-##Quick review
+## Quick review
 
 - [x] Custom Textview
 - [x] Center Textview alignment
@@ -46,14 +39,28 @@ Project Website: [TOOLBARLIB][2]
 - [x] CandyBar implementation
 ![this is the demo 2](screenshot/demo2.jpg)
 
+# Usage
 
+## Setup
+  - Add the following repository:
+```gradle
+repositories {
+    maven {  url "http://dl.bintray.com/jjhesk/maven"  }
+}
+```
+  - Add the following dependency:
+```gradle
+dependencies {
+    compile 'com.hkm.ui:advancedtoolbar:0.8.0'
+}
+```
 
-##implementation
+## Implementation
 You can call by simple direct API from the code and it will do the magic for you.
-The new implementation - [the easiest][3]
-Simple way to start your module
+
+The new implementation - [the easiest][3]<br>Simple way to start your module:
 ```java
-TopBarManager actionToolBar =      
+TopBarManager actionToolBar =
     TopBarManager.ManagerBulider.with(this)
     ...
         .companyLogo(R.drawable.actionbar_bg_pb_logo)
@@ -63,9 +70,9 @@ TopBarManager actionToolBar =
     ...
         .build(tb);
 ```
+
 Implementation of the search view:
 ```java
-
 ...
     .searchBarEvents(new TopBarManager.searchBarListener() {
                 @Override
@@ -91,7 +98,8 @@ Implementation of the search view:
 
 ...
 ```
-# Methods table for custom toolbar introduction
+
+## Layout Attributes
 
 There are several attributes you can set:
 
@@ -104,8 +112,10 @@ There are several attributes you can set:
 | searchBarEvents | the implementation of the listener event for the plugins |
 | setLiveIcon | there are two overriding: 1) is the actual LiveIcon object . 2) two configurations for the layout xml resource id and the image resource id|
 
-# Implementation for dynamic icon for on the action tool bar
-###setup 1: prepare the custom layout for the dynamic icon and here is the sample
+# Examples
+## Dynamic icon for on the action tool bar
+
+Step 1: prepare the custom layout for the dynamic icon and here is the sample
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -142,7 +152,8 @@ There are several attributes you can set:
     </RelativeLayout>
 </FrameLayout>
 ```
-###setup 2: setup on configurations
+
+Step 2: setup on configurations
 ```java
    worker = TopBarManager.ManagerBulider.with(this)
    ...
@@ -150,11 +161,13 @@ There are several attributes you can set:
    ...
    .build(toolbar);
 ```
-###setup 3: retrieve the object ```LiveIcon```
+
+Step 3: retrieve the object ```LiveIcon```
 ```java
    dynamic_icon = worker.getDynamicIcon();
 ```
-###setup 4: inject object into these overrides
+
+Step 4: inject object into these overrides
 ```java
    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,7 +178,7 @@ There are several attributes you can set:
         ...
         return true;
     }
-    
+
        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.dynamic) {
@@ -174,7 +187,7 @@ There are several attributes you can set:
         return super.onOptionsItemSelected(item);
     }
 ```
-# Implementation for the Candy Bar
+## Candy Bar
 ```java
    worker = CandyBar
             .Builder.with(this)
@@ -204,75 +217,74 @@ There are several attributes you can set:
             .build(toolbar);
 
 ```
+
 Other manipulations
+
 ```java
-       //demo to show the title only
-              worker.showTitle("fill this up now");
+  //demo to show the title only
+  worker.showTitle("fill this up now");
 
-       //demo to show the title only
-              worker.showLogo();
+  //demo to show the title only
+  worker.showLogo();
 
-       //demo to show the title only
-              worker.triggerfromSearchIcon();
+  //demo to show the title only
+  worker.triggerfromSearchIcon();
 
-       //demo to show the title only
-              worker.updateCount(u++);
+  //demo to show the title only
+  worker.updateCount(u++);
 
-       //demo to show the title only
-              worker.updateCount(0);
+  //demo to show the title only
+  worker.updateCount(0);
 
-       //demo to show the previous layout
-              worker.showBack();
-
+  //demo to show the previous layout
+  worker.showBack();
 ```
 
 
-# Beast Bar
+## Beast Bar
 
-Put the following code into the onCreate section
+Put the following code into the onCreate section:
 
 ![demo](https://i.imgflip.com/t8u33.gif)
 ```java
-
-
-   Toolbar temp = (Toolbar) findViewById(R.id.toolbar);
-
+Toolbar temp = (Toolbar) findViewById(R.id.toolbar);
 
   BeastBar.Builder bb = new BeastBar.Builder();
   //enter your back icon
-        bb.back(R.drawable.ic_m_back);
+  bb.back(R.drawable.ic_m_back);
   //enter your company icon
-        bb.companyIcon(R.drawable.starz_logo);
+  bb.companyIcon(R.drawable.starz_logo);
   //enter your background drawable
-        bb.background(R.drawable.actionbar_bg_dark_black);
-   //enter your search icon
-        bb.search(R.drawable.ic_find_mg);
+  bb.background(R.drawable.actionbar_bg_dark_black);
+  //enter your search icon
+  bb.search(R.drawable.ic_find_mg);
 
   final BeastBar toolbar = BeastBar.withToolbar(this, temp, bb);
-
 ```
 
+## Social Toolbar
 
-# Implementation for the social tool bar
+Add this component into your xml layout in anywhere:
 
-Add this component into your xml layout in anywhere
 ```xml
-      <com.hkm.advancedtoolbar.socialbar.combar
-                    android:id="@+id/social_bar_combar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp" />
+<com.hkm.advancedtoolbar.socialbar.combar
+              android:id="@+id/social_bar_combar"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="10dp"
+              android:layout_marginTop="10dp" />
 
 ```
+
 retrieve the component ```combar``` and use the method ```setShareContent``` to inject the information needed for the sharing intents. Please also refer to the table.
+
 ```java
-      public void setShareContentBar(String title, String except, String link) {
-            combar mCombo = (combar) content_view.findViewById(R.id.social_bar_combar);
-            mCombo
-            .connectAlert(getFragmentManager())
-            .setShareContent(title, except, link);
-        }
+public void setShareContentBar(String title, String except, String link) {
+  combar mCombo = (combacontent_view.findViewById(R.id.social_bar_combar);
+  mCombo
+      .connectAlert(getFragmentManager())
+      .setShareContent(title, except, link);
+}
 ```
 
 Social Bar method table for ```combar```:
@@ -282,6 +294,10 @@ Social Bar method table for ```combar```:
 | searchView | there are 4 options. The available options are ```classic_3```, ```classic_2```, ```classic_1```  |
 | setShareContent | inject information into the sharing intents |
 
+# ChangeLogs
+
+## Release 0.11
+  - 
 
 [1]: https://github.com/mikepenz/Android-ActionItemBadge
 [2]: https://github.com/jjhesk/ToolBarLib

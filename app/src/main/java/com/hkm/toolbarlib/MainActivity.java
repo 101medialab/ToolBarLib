@@ -3,12 +3,15 @@ package com.hkm.toolbarlib;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 /**
  * Created by hesk on 3/8/15.
  */
-public class _mainMenu extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,12 +19,9 @@ public class _mainMenu extends AppCompatActivity {
     }
 
     private void startApp(Class<?> k) {
+        Log.d(TAG, String.format("start activity: %s", k.getSimpleName()));
         Intent g = new Intent(this, k);
         startActivity(g);
-    }
-
-    public void ios(View view) {
-     //   startApp(CustomActionBar.class);
     }
 
     public void main3(View view) {
@@ -30,10 +30,6 @@ public class _mainMenu extends AppCompatActivity {
 
     public void main2(View view) {
         startApp(TopBarManagerExampleFull.class);
-    }
-
-    public void main4(View view) {
-      //  startApp(iOSActionBarWorkerExample.class);
     }
 
     public void candybarimple(View view) {

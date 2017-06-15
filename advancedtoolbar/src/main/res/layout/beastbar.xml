@@ -24,20 +24,28 @@
         android:textColor="@color/title_default_color"
         android:textSize="@dimen/title_size_classic" />
 
-    <LinearLayout
-        android:id="@+id/left_container"
+    <FrameLayout
+        android:id="@+id/left_bar_button_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:orientation="horizontal"
-        android:padding="0dp">
+        android:padding="0dp"
+        android:clickable="true"
+        android:focusable="true">
 
-        <ImageButton
-            android:id="@id/ios_back_button"
+        <TextView
+            android:id="@+id/left_bar_button_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:id="@id/left_bar_button_image_view"
             style="@style/actionButtonhkm"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
-    </LinearLayout>
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/yourfeed_container"
@@ -55,20 +63,27 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/right_container"
+    <FrameLayout
+        android:id="@+id/right_bar_button_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:orientation="horizontal"
-        android:padding="0dp">
+        android:padding="0dp"
+        android:clickable="true"
+        android:focusable="true">
 
-        <ImageButton
-            android:id="@id/ios_find_icon"
+        <TextView
+            android:id="@+id/right_bar_button_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
+
+        <ImageView
+            android:id="@id/right_bar_button_image_button"
             style="@style/actionButtonhkm"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
-    </LinearLayout>
+    </FrameLayout>
 
 
 </RelativeLayout>

@@ -7,7 +7,7 @@
     tools:ignore="UnknownId">
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@id/ios_find_icon"
+        android:id="@id/right_bar_button_image_button"
         style="@android:style/Widget.Holo.ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/ios_search_close_btn"
-        android:layout_toRightOf="@id/ios_find_icon"
+        android:layout_toRightOf="@id/right_bar_button_image_button"
         android:gravity="center_vertical"
         android:paddingLeft="10dp">
 
@@ -39,7 +39,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@id/ios_search_close_btn"
-        android:layout_toRightOf="@id/ios_find_icon"
+        android:layout_toRightOf="@id/right_bar_button_image_button"
         android:layout_toStartOf="@id/ios_search_close_btn"
         android:background="@color/lightgrey"
         android:imeOptions="actionSearch"
