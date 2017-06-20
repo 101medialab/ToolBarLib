@@ -550,6 +550,16 @@ public class BeastBar {
         return isSearchButtonShown;
     }
 
+    public BeastBar hideLeftBarButton() {
+        leftBarButtonContainer.setVisibility(View.GONE);
+        return this;
+    }
+
+    public BeastBar showLeftBarButton() {
+        leftBarButtonContainer.setVisibility(View.VISIBLE);
+        return this;
+    }
+
     public BeastBar setLeftBarButtonText(String buttonText) {
         leftBarButtonLabel.setText(buttonText);
         return this;

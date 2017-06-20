@@ -37,7 +37,9 @@
             android:id="@+id/left_bar_button_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"/>
+            android:layout_gravity="center_vertical|start"
+            android:textAlignment="viewStart"
+            android:layout_marginLeft="8dp"/>
 
         <ImageView
             android:id="@id/left_bar_button_image_view"
@@ -76,7 +78,9 @@
             android:id="@+id/right_bar_button_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"/>
+            android:layout_gravity="center_vertical|end"
+            android:textAlignment="viewEnd"
+            android:layout_marginRight="8dp"/>
 
         <ImageView
             android:id="@id/right_bar_button_image_button"
