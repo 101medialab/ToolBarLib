@@ -69,11 +69,13 @@
                 android:visibility="gone" />
 
             <View
+                android:id="@+id/search_view_underline"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:layout_alignParentBottom="true"
                 android:background="#fff"
-                android:backgroundTint="#10000000" />
+                android:backgroundTint="#10000000"
+                android:visibility="gone"/>
         </RelativeLayout>
 
 

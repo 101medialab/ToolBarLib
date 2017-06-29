@@ -57,6 +57,7 @@ public class MaterialSearchView extends SearchViewBase {
     //Views
     protected View mSearchLayout;
     protected View mTintView;
+    protected View mUnderLine;
     protected ListView mSuggestionsListView;
     protected EditText mSearchSrcTextView;
     protected ImageButton mBackBtn;
@@ -142,6 +143,7 @@ public class MaterialSearchView extends SearchViewBase {
         mBackBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_up_btn);
         mVoiceBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_voice_btn);
         mEmptyBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_empty_btn);
+        mUnderLine = mSearchLayout.findViewById(R.id.search_view_underline);
         mTintView = mSearchLayout.findViewById(R.id.transparent_view);
 
         mSearchSrcTextView.setOnClickListener(mOnClickListener);
@@ -368,6 +370,10 @@ public class MaterialSearchView extends SearchViewBase {
         } else {
             mSuggestionsListView.setBackgroundDrawable(background);
         }
+    }
+
+    public void setUnderLineVisibility(int visibility) {
+        mUnderLine.setVisibility(visibility);
     }
 
     public void setCursorDrawable(int drawable) {
