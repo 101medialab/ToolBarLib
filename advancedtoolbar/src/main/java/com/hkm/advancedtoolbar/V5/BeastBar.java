@@ -560,9 +560,17 @@ public class BeastBar {
         return this;
     }
 
+    public TextView getLeftBarButtonLabel() {
+        return leftBarButtonLabel;
+    }
+
     public BeastBar setLeftBarButtonText(String buttonText) {
         leftBarButtonLabel.setText(buttonText);
         return this;
+    }
+
+    public ImageView getLeftBarButtonImageView() {
+        return leftBarButtonImageView;
     }
 
     public BeastBar setLeftBarButtonIcon(@DrawableRes int resId) {
@@ -623,9 +631,17 @@ public class BeastBar {
         return this;
     }
 
+    public TextView getRightBarButtonLabel() {
+        return rightBarButtonLabel;
+    }
+
     public BeastBar setRightBarButtonText(String buttonText) {
         rightBarButtonLabel.setText(buttonText);
         return this;
+    }
+
+    public ImageView getRightBarButtonImageView() {
+        return rightBarButtonImageView;
     }
 
     public BeastBar setRightBarButtonIcon(@DrawableRes int resId) {
