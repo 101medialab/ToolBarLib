@@ -654,6 +654,11 @@ public class BeastBar {
         return this;
     }
 
+    public BeastBar setRightBarButtonOnClickListener(@Nullable final View.OnClickListener onClickListener) {
+        rightBarButtonContainer.setOnClickListener(onClickListener);
+        return this;
+    }
+
     private class enhancedAnimation extends ListenerAnimation {
         private View target;
 
