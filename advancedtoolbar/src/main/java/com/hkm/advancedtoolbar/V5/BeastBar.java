@@ -631,6 +631,10 @@ public class BeastBar {
         return this;
     }
 
+    public TextView getTitleLabel() {
+        return mtv;
+    }
+
     public TextView getRightBarButtonLabel() {
         return rightBarButtonLabel;
     }
