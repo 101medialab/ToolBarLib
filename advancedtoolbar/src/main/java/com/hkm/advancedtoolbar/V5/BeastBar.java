@@ -526,12 +526,14 @@ public class BeastBar {
     }
 
     /* search button visibility */
+    @Deprecated
     public void showSearchButton() {
-        rightBarButtonContainer.setVisibility(View.VISIBLE);
+        showRightBarButton();
     }
 
+    @Deprecated
     public void hideSearchButton() {
-        rightBarButtonContainer.setVisibility(View.GONE);
+        hideRightBarButton();
     }
 
     public boolean isBackButtonShown() {
@@ -557,6 +559,16 @@ public class BeastBar {
 
     public BeastBar showLeftBarButton() {
         leftBarButtonContainer.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    public BeastBar hideRightBarButton() {
+        rightBarButtonContainer.setVisibility(View.GONE);
+        return this;
+    }
+
+    public BeastBar showRightBarButton() {
+        rightBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
 
