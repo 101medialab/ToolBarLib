@@ -109,7 +109,6 @@ public class combar extends FrameLayout implements View.OnClickListener {
         try {
             Hg instance_icon = Hg.reverseId(v.getId());
             int app_location = getPackageNameIndex(instance_icon);
-            Log.d(TAG, String.format("appLocation=%d", app_location));
             if (app_location > -1) {
                 share(app_location);
             } else {

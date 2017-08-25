@@ -23,7 +23,7 @@ public enum Hg {
     facebook("com.facebook.katana", R.drawable.fb, R.id.social_bar_facebook),
     whatsapp("com.whatsapp", R.drawable.whatsapp, R.id.social_bar_whatsapp),
     twitter("com.twitter.android", R.drawable.twitter, R.id.social_bar_twitter),
-    message("com.tencent.mm.ui.tools.ShareToTimeLineUI", R.drawable.message, R.id.social_bar_sms);
+    message("com.tencent.mm", R.drawable.message, R.id.social_bar_sms);
 
     private String package_name;
     private int drawbable, extn;
