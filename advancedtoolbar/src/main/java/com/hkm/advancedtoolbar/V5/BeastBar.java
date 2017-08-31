@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -667,14 +666,6 @@ public class BeastBar {
 
     public BeastBar setRightBarButtonIcon(@DrawableRes int resId) {
         rightBarButtonImageView.setImageResource(resId);
-        return this;
-    }
-
-    public BeastBar setRightBarButtonIconSize(int size) {
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)rightBarButtonContainer.getLayoutParams();
-        params.height = size;
-        params.width = size;
-        rightBarButtonContainer.setLayoutParams(params);
         return this;
     }
 
