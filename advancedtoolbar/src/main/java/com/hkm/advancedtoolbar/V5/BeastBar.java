@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -30,18 +31,26 @@ import android.widget.TextView;
 import com.hkm.advancedtoolbar.R;
 import com.hkm.advancedtoolbar.Util.TitleStorage;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by hesk on 28/10/15.
  */
 public class BeastBar {
-    public static int SINGLELINE = 1, MULTILINE = 2;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({SINGLELINE, MULTILINE})
+    public @interface ToolbarTitleMode {}
+    public static final int SINGLELINE = 1;
+    public static final int MULTILINE = 2;
+
     private String text_title;
     private Context mContext;
     private Toolbar container;
     private TextView mtv;
     private ImageView mImage;
     private RelativeLayout mBackground;
-    private FrameLayout leftBarButtonContainer, rightBarButtonContainer;
+    private FrameLayout leftBarButtonContainer, rightBarButtonContainer, centerContainer;
     private TextView leftBarButtonLabel, rightBarButtonLabel;
     private ImageView leftBarButtonImageView, rightBarButtonImageView;
     private ImageButton mYourFeedButton;
@@ -61,9 +70,10 @@ public class BeastBar {
     private TitleStorage mTitle;
 
     public static class Builder {
+        private @ToolbarTitleMode int title_line_config = SINGLELINE;
         private int
                 ic_company, ic_search, ic_back, ic_background, ic_yourfeed,
-                tb_textsize = 0, tb_title_color = 0, title_line_config = 1,
+                tb_textsize = 0, tb_title_color = 0,
                 animation_duration_logo = -1,
                 animation_duration = -1;
         private Drawable companyIconDrawable = null;
@@ -133,7 +143,7 @@ public class BeastBar {
             return this;
         }
 
-        public Builder setTitleLine(int lines) {
+        public Builder setTitleLine(@ToolbarTitleMode int lines) {
             this.title_line_config = lines;
             return this;
         }
@@ -237,6 +247,7 @@ public class BeastBar {
         leftBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
         mBackground = (RelativeLayout) v.findViewById(R.id.ios_background);
         rightBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
+        centerContainer = v.findViewById(R.id.centerContainer);
         leftBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
         rightBarButtonLabel = (TextView) v.findViewById(R.id.right_bar_button_label);
         mtv = (TextView) v.findViewById(R.id.ios_actionbar_title);
@@ -275,11 +286,14 @@ public class BeastBar {
             mtv.setTypeface(setup.typeface);
         }
         leftBarButtonContainer.setVisibility(View.INVISIBLE);
-        if (setup.title_line_config == SINGLELINE) {
-            mtv.setSingleLine(true);
-        } else {
-            mtv.setSingleLine(false);
-            mtv.setMaxLines(setup.title_line_config);
+        switch (setup.title_line_config) {
+            case SINGLELINE:
+                mtv.setSingleLine(true);
+                break;
+            default:
+                mtv.setSingleLine(false);
+                mtv.setMaxLines(setup.title_line_config);
+                break;
         }
         mYourFeedButton.setVisibility(View.INVISIBLE);
 
@@ -694,6 +708,10 @@ public class BeastBar {
         }
 
 
+    }
+
+    public FrameLayout getCenterContainer() {
+        return centerContainer;
     }
 
     private class displayManagement {

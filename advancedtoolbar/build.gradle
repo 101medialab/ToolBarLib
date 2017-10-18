@@ -12,9 +12,9 @@ android {
     buildTypes {
         libraryVariants.all { variant ->
             variant.outputs.all { output ->
-                def filename = output.outputFile.name
-                filename = filename.replace('library-', 'advancedtoolbar-').replace('.aar', '-' + defaultConfig.versionName + '.aar')
-                output.outputFileName = new File(output.outputFile.parent, filename)
+                //def filename = outputFileName.replace('library-', 'advancedtoolbar-').replace('.aar', "-${defaultConfig.versionName}.aar")
+                def filename = "advancedtoolbar-${variant.name}-${defaultConfig.versionName}.aar"
+                outputFileName = new File(filename)
             }
         }
 

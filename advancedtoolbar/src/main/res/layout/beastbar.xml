@@ -90,5 +90,11 @@
             android:layout_gravity="center_vertical"/>
     </FrameLayout>
 
-
+    <FrameLayout
+        android:id="@+id/centerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/left_bar_button_container"
+        android:layout_toLeftOf="@+id/right_bar_button_container"
+        android:layout_centerVertical="true" />
 </RelativeLayout>
