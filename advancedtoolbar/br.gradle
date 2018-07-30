@@ -3,9 +3,9 @@ publish {
     userOrg = project.POM_DEVELOPER_ID
     groupId = project.PUBLISH_GROUP_ID
     artifactId = project.POM_ARTIFACT_ID
-    version = project.VERSION_NAME
+    publishVersion = project.VERSION_NAME
     uploadName = project.POM_ARTIFACT_ID
-    description = project.POM_DESCRIPTION
+    desc = project.POM_DESCRIPTION
     website = project.POM_URL
     autoPublish = true
     dryRun = false

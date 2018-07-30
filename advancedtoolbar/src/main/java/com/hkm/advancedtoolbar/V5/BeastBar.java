@@ -19,6 +19,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -49,10 +50,10 @@ public class BeastBar {
     private Toolbar container;
     private TextView mtv;
     private ImageView mImage;
-    private RelativeLayout mBackground;
-    private FrameLayout leftBarButtonContainer, rightBarButtonContainer, centerContainer;
-    private TextView leftBarButtonLabel, rightBarButtonLabel;
-    private ImageView leftBarButtonImageView, rightBarButtonImageView;
+    private ViewGroup mBackground;
+    private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer;
+    private TextView startBarButtonLabel, endBarButtonLabel;
+    private ImageView startBarButtonImageView, endBarButtonImageView;
     private ImageButton mYourFeedButton;
     private Runnable mFindFunction;
     private Animation
@@ -244,16 +245,16 @@ public class BeastBar {
         isBackButtonShown = false;
         isSearchButtonShown = false;
         View v = LayoutInflater.from(mContext).inflate(R.layout.beastbar, null, false);
-        leftBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
-        mBackground = (RelativeLayout) v.findViewById(R.id.ios_background);
-        rightBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
+        startBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
+        mBackground = v.findViewById(R.id.ios_background);
+        endBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
         centerContainer = v.findViewById(R.id.centerContainer);
-        leftBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
-        rightBarButtonLabel = (TextView) v.findViewById(R.id.right_bar_button_label);
+        startBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
+        endBarButtonLabel = (TextView) v.findViewById(R.id.right_bar_button_label);
         mtv = (TextView) v.findViewById(R.id.ios_actionbar_title);
         mImage = (ImageView) v.findViewById(R.id.logo_k);
-        rightBarButtonImageView = (ImageView) v.findViewById(R.id.right_bar_button_image_button);
-        leftBarButtonImageView = (ImageView) v.findViewById(R.id.left_bar_button_image_view);
+        endBarButtonImageView = (ImageView) v.findViewById(R.id.right_bar_button_image_button);
+        startBarButtonImageView = (ImageView) v.findViewById(R.id.left_bar_button_image_view);
         mYourFeedButton = (ImageButton) v.findViewById(R.id.yourfeed_button);
         this.container.addView(v);
         main_logo_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
@@ -285,7 +286,7 @@ public class BeastBar {
         if (setup.typeface != null) {
             mtv.setTypeface(setup.typeface);
         }
-        leftBarButtonContainer.setVisibility(View.INVISIBLE);
+        startBarButtonContainer.setVisibility(View.INVISIBLE);
         switch (setup.title_line_config) {
             case SINGLELINE:
                 mtv.setSingleLine(true);
@@ -303,7 +304,7 @@ public class BeastBar {
         mtv.requestLayout();
 
         if (setup.ic_search != 0) {
-            setRightBarButtonIcon(setup.ic_search);
+            setEndBarButtonIcon(setup.ic_search);
             isSearchButtonShown = true;
         }
 
@@ -322,26 +323,26 @@ public class BeastBar {
         }
 
         if (setup.ic_back != 0) {
-            setLeftBarButtonIcon(setup.ic_back);
+            setStartBarButtonIcon(setup.ic_back);
         }
 
         if (setup.ic_yourfeed != 0) {
             mYourFeedButton.setImageResource(setup.ic_yourfeed);
         }
 
-        leftBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        startBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                leftSide = leftBarButtonContainer.getWidth();
-                removeLayoutListener(leftBarButtonContainer, this);
+                leftSide = startBarButtonContainer.getWidth();
+                removeLayoutListener(startBarButtonContainer, this);
             }
         });
 
-        rightBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        endBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                rightSide = rightBarButtonContainer.getWidth();
-                removeLayoutListener(rightBarButtonContainer, this);
+                rightSide = endBarButtonContainer.getWidth();
+                removeLayoutListener(endBarButtonContainer, this);
             }
         });
 
@@ -356,7 +357,7 @@ public class BeastBar {
     }
 
     public void displayRightFirstIcon(boolean b, boolean withAnimation) {
-        final displayManagement dm = new displayManagement(b, withAnimation, rightBarButtonContainer);
+        final displayManagement dm = new displayManagement(b, withAnimation, endBarButtonContainer);
     }
 
 
@@ -436,30 +437,30 @@ public class BeastBar {
         if (func == null) {
             if (isSearchButtonShown) {
                 isSearchButtonShown = false;
-                mayCancelAnimation(rightBarButtonContainer);
+                mayCancelAnimation(endBarButtonContainer);
                 back_out_to_right.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        rightBarButtonContainer.setVisibility(View.INVISIBLE);
+                        endBarButtonContainer.setVisibility(View.INVISIBLE);
                     }
                 });
-                rightBarButtonContainer.startAnimation(back_out_to_right);
-                rightBarButtonContainer.setOnClickListener(null);
+                endBarButtonContainer.startAnimation(back_out_to_right);
+                endBarButtonContainer.setOnClickListener(null);
             }
         } else {
             if (!isSearchButtonShown) {
                 isSearchButtonShown = true;
-                mayCancelAnimation(rightBarButtonContainer);
+                mayCancelAnimation(endBarButtonContainer);
                 back_in_from_right.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        rightBarButtonContainer.setVisibility(View.VISIBLE);
+                        endBarButtonContainer.setVisibility(View.VISIBLE);
 
                     }
                 });
-                rightBarButtonContainer.startAnimation(back_in_from_right);
+                endBarButtonContainer.startAnimation(back_in_from_right);
             }
-            rightBarButtonContainer.setOnClickListener(new View.OnClickListener() {
+            endBarButtonContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     func.onSearchPress();
@@ -542,12 +543,12 @@ public class BeastBar {
     /* search button visibility */
     @Deprecated
     public void showSearchButton() {
-        showRightBarButton();
+        showEndBarButton();
     }
 
     @Deprecated
     public void hideSearchButton() {
-        hideRightBarButton();
+        hideEndBarButton();
     }
 
     public boolean isBackButtonShown() {
@@ -566,88 +567,138 @@ public class BeastBar {
         return isSearchButtonShown;
     }
 
+    public BeastBar hideStartBarButton() {
+        startBarButtonContainer.setVisibility(View.GONE);
+        return this;
+    }
+
+    @Deprecated
     public BeastBar hideLeftBarButton() {
-        leftBarButtonContainer.setVisibility(View.GONE);
+        return hideStartBarButton();
+    }
+
+    public BeastBar showStartBarButton() {
+        startBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
 
+    @Deprecated
     public BeastBar showLeftBarButton() {
-        leftBarButtonContainer.setVisibility(View.VISIBLE);
+        return showStartBarButton();
+    }
+
+    public BeastBar hideEndBarButton() {
+        endBarButtonContainer.setVisibility(View.GONE);
         return this;
     }
 
+    @Deprecated
     public BeastBar hideRightBarButton() {
-        rightBarButtonContainer.setVisibility(View.GONE);
+        return hideEndBarButton();
+    }
+
+    public BeastBar showEndBarButton() {
+        endBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
 
+    @Deprecated
     public BeastBar showRightBarButton() {
-        rightBarButtonContainer.setVisibility(View.VISIBLE);
-        return this;
+        return showEndBarButton();
     }
 
+    public @NonNull FrameLayout getStartBarButtonContainer() {
+        return startBarButtonContainer;
+    }
+
+    public TextView getStartBarButtonLabel() {
+        return startBarButtonLabel;
+    }
+
+    @Deprecated
     public TextView getLeftBarButtonLabel() {
-        return leftBarButtonLabel;
+        return getStartBarButtonLabel();
     }
 
+
+    public BeastBar setStartBarButtonText(String buttonText) {
+        startBarButtonLabel.setText(buttonText);
+        return this;
+    }
+
+    @Deprecated
     public BeastBar setLeftBarButtonText(String buttonText) {
-        leftBarButtonLabel.setText(buttonText);
-        return this;
+        return setStartBarButtonText(buttonText);
     }
 
+    public ImageView getStartBarButtonImageView() {
+        return startBarButtonImageView;
+    }
+
+    @Deprecated
     public ImageView getLeftBarButtonImageView() {
-        return leftBarButtonImageView;
+        return getStartBarButtonImageView();
     }
 
+    public BeastBar setStartBarButtonIcon(@DrawableRes int resId) {
+        startBarButtonImageView.setImageResource(resId);
+        return this;
+    }
+
+    @Deprecated
     public BeastBar setLeftBarButtonIcon(@DrawableRes int resId) {
-        leftBarButtonImageView.setImageResource(resId);
+        return setStartBarButtonIcon(resId);
+    }
+
+    public BeastBar setStartBarButtonIcon(Drawable drawable) {
+        startBarButtonImageView.setImageDrawable(drawable);
         return this;
     }
 
+    @Deprecated
     public BeastBar setLeftBarButtonIcon(Drawable drawable) {
-        leftBarButtonImageView.setImageDrawable(drawable);
-        return this;
+        return setStartBarButtonIcon(drawable);
     }
 
     /**
-     * Deprecated, use setLeftBarButtonOnClickListener(onClickListener) instead
+     * Deprecated, use setStartBarButtonOnClickListener(onClickListener) instead
      * @param onClickListener
      * @return
      */
     @Deprecated
     public BeastBar setBackIconFunc(@Nullable final onButtonPressListener onClickListener) {
-        return setLeftBarButtonOnClickListener(onClickListener);
+        return setStartBarButtonOnClickListener(onClickListener);
     }
 
-    public BeastBar setLeftBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
+    public BeastBar setStartBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
         if (onClickListener == null) {
             if (isBackButtonShown) {
                 isBackButtonShown = false;
-                mayCancelAnimation(leftBarButtonImageView);
+                mayCancelAnimation(startBarButtonImageView);
                 back_out.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        leftBarButtonContainer.setVisibility(View.INVISIBLE);
+                        startBarButtonContainer.setVisibility(View.INVISIBLE);
 
                     }
                 });
-                leftBarButtonContainer.startAnimation(back_out);
-                leftBarButtonContainer.setOnClickListener(null);
+                startBarButtonContainer.startAnimation(back_out);
+                startBarButtonContainer.setOnClickListener(null);
             }
         } else {
             if (!isBackButtonShown) {
                 isBackButtonShown = true;
-                mayCancelAnimation(leftBarButtonImageView);
+                mayCancelAnimation(startBarButtonImageView);
                 back_in.setAnimationListener(new ListenerAnimation() {
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        leftBarButtonContainer.setVisibility(View.VISIBLE);
+                        startBarButtonContainer.setVisibility(View.VISIBLE);
 
                     }
                 });
-                leftBarButtonContainer.startAnimation(back_in);
+                startBarButtonContainer.startAnimation(back_in);
             }
-            leftBarButtonContainer.setOnClickListener(new View.OnClickListener() {
+            startBarButtonContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onClickListener.onBackPress(titlePopBack());
@@ -657,40 +708,80 @@ public class BeastBar {
         return this;
     }
 
+    @Deprecated
+    public BeastBar setLeftBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
+        return setStartBarButtonOnClickListener(onClickListener);
+    }
+
     public TextView getTitleLabel() {
         return mtv;
     }
 
-    public TextView getRightBarButtonLabel() {
-        return rightBarButtonLabel;
+    public @NonNull FrameLayout getEndBarButtonContainer() {
+        return endBarButtonContainer;
     }
 
-    public BeastBar setRightBarButtonText(String buttonText) {
-        rightBarButtonLabel.setText(buttonText);
-        return this;
-    }
-
-    public ImageView getRightBarButtonImageView() {
-        return rightBarButtonImageView;
-    }
-
+    @Deprecated
     public FrameLayout getRightBarButtonContainer() {
-        return rightBarButtonContainer;
+        return endBarButtonContainer;
     }
 
+    public TextView getEndBarButtonLabel() {
+        return endBarButtonLabel;
+    }
+
+    @Deprecated
+    public TextView getRightBarButtonLabel() {
+        return getEndBarButtonLabel();
+    }
+
+    public BeastBar setEndBarButtonText(String buttonText) {
+        endBarButtonLabel.setText(buttonText);
+        return this;
+    }
+
+    @Deprecated
+    public BeastBar setRightBarButtonText(String buttonText) {
+        return setEndBarButtonText(buttonText);
+    }
+
+    public ImageView getEndBarButtonImageView() {
+        return endBarButtonImageView;
+    }
+
+    @Deprecated
+    public ImageView getRightBarButtonImageView() {
+        return getEndBarButtonImageView();
+    }
+
+    public BeastBar setEndBarButtonIcon(@DrawableRes int resId) {
+        endBarButtonImageView.setImageResource(resId);
+        return this;
+    }
+
+    @Deprecated
     public BeastBar setRightBarButtonIcon(@DrawableRes int resId) {
-        rightBarButtonImageView.setImageResource(resId);
+        return setEndBarButtonIcon(resId);
+    }
+
+    public BeastBar setEndBarButtonIcon(Drawable drawable) {
+        endBarButtonImageView.setImageDrawable(drawable);
         return this;
     }
 
+    @Deprecated
     public BeastBar setRightBarButtonIcon(Drawable drawable) {
-        rightBarButtonImageView.setImageDrawable(drawable);
+        return setEndBarButtonIcon(drawable);
+    }
+
+    public BeastBar setEndBarButtonOnClickListener(@Nullable View.OnClickListener onClickListener) {
+        endBarButtonContainer.setOnClickListener(onClickListener);
         return this;
     }
 
+    @Deprecated
     public BeastBar setRightBarButtonOnClickListener(@Nullable final View.OnClickListener onClickListener) {
-        rightBarButtonContainer.setOnClickListener(onClickListener);
-        return this;
+        return setEndBarButtonOnClickListener(onClickListener);
     }
 
     private class enhancedAnimation extends ListenerAnimation {

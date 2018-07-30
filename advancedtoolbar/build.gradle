@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 android {
     compileSdkVersion project.ANDROID_BUILD_SDK_VERSION as int
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION as int
@@ -13,7 +12,7 @@ android {
         libraryVariants.all { variant ->
             variant.outputs.all { output ->
                 //def filename = outputFileName.replace('library-', 'advancedtoolbar-').replace('.aar', "-${defaultConfig.versionName}.aar")
-                def filename = "advancedtoolbar-${variant.name}-${defaultConfig.versionName}.aar"
+                def filename = "advancedtoolbar-${variant.name}-${defaultConfig.versionName}-${defaultConfig.versionCode}.aar"
                 outputFileName = new File(filename)
             }
         }
@@ -26,10 +25,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile supportDependencies.appCompat
-    compile supportDependencies.annotation
-    compile('com.mikepenz:actionitembadge:3.3.0@aar') {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.annotation
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    api('com.mikepenz:actionitembadge:3.3.0@aar') {
         transitive = true
     }
 }
