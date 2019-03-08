@@ -82,14 +82,7 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         search_on.setOnClickListener(this);
         show_yourfeed.setOnClickListener(this);
         hide_yourfeed.setOnClickListener(this);
-        toolbar.setFindIconFunc(new ButtonCon());
-    }
-
-    protected class ButtonCon extends buttonWrapper {
-        @Override
-        public void onSearchPress() {
-            searchView.showSearch();
-        }
+        toolbar.setStartBarButtonOnClickListener(null);
     }
 
     protected void search_start() {
@@ -123,10 +116,10 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
                 toolbar.setActionTitle("Kepler 452b");
                 break;
             case R.id.b4:
-                toolbar.setBackIconFunc(new ButtonCon());
+                toolbar.setStartBarButtonOnClickListener(null);
                 break;
             case R.id.b5:
-                toolbar.setBackIconFunc(null);
+                toolbar.setStartBarButtonOnClickListener(null);
                 break;
             case R.id.bxx:
                 finish();
@@ -135,7 +128,7 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
                 search_start();
                 break;
             case R.id.search_on:
-                toolbar.setFindIconFunc(new ButtonCon());
+                toolbar.setFindIconFunc(null);
                 break;
             case R.id.search_off:
                 toolbar.setFindIconFunc(null);

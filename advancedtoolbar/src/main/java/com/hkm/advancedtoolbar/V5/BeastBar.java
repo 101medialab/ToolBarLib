@@ -19,14 +19,12 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hkm.advancedtoolbar.R;
@@ -45,26 +43,21 @@ public class BeastBar {
     public static final int SINGLELINE = 1;
     public static final int MULTILINE = 2;
 
-    private String text_title;
     private Context mContext;
     private Toolbar container;
     private TextView mtv;
     private ImageView mImage;
-    private ViewGroup mBackground;
     private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer;
     private TextView startBarButtonLabel, endBarButtonLabel;
     private ImageView startBarButtonImageView, endBarButtonImageView;
     private ImageButton mYourFeedButton;
-    private Runnable mFindFunction;
     private Animation
-            main_logo_in,
-            main_logo_out,
-            title_in,
-            title_out,
-            back_in,
-            back_out,
-            back_in_from_right,
-            back_out_to_right;
+            main_logo_in;
+    private Animation main_logo_out;
+    private Animation back_in;
+    private Animation back_out;
+    private Animation back_in_from_right;
+    private Animation back_out_to_right;
     private boolean isCompanyLogoShown, isTitleShown, isBackButtonShown, isSearchButtonShown;
     private Builder setup;
     private int leftSide = 0, rightSide = 0;
@@ -166,8 +159,6 @@ public class BeastBar {
 
     }
 
-    private onButtonPressListener mButtonBack;
-
     public interface onButtonPressListener {
         /**
          * @param previousTitleSteps the previous title to be found in the history or otherwise it is nothing
@@ -246,7 +237,6 @@ public class BeastBar {
         isSearchButtonShown = false;
         View v = LayoutInflater.from(mContext).inflate(R.layout.beastbar, null, false);
         startBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
-        mBackground = v.findViewById(R.id.ios_background);
         endBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
         centerContainer = v.findViewById(R.id.centerContainer);
         startBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
@@ -259,8 +249,8 @@ public class BeastBar {
         this.container.addView(v);
         main_logo_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
         main_logo_out = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getOutAnimation());
-        title_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
-        title_out = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getOutAnimation());
+        Animation title_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
+        Animation title_out = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getOutAnimation());
         back_in = AnimationUtils.loadAnimation(mContext, animaionset.slideText.getInAnimation());
         back_out = AnimationUtils.loadAnimation(mContext, animaionset.slideText.getOutAnimation());
         back_in_from_right = AnimationUtils.loadAnimation(mContext, R.anim.back_in_from_right);
@@ -353,7 +343,6 @@ public class BeastBar {
         if (setup.save_title_navigation) {
             mTitle = new TitleStorage();
         }
-        // mBackground.setBackgroundResource(setup.ic_background);
     }
 
     public void displayRightFirstIcon(boolean b, boolean withAnimation) {
@@ -540,17 +529,6 @@ public class BeastBar {
         return this;
     }
 
-    /* search button visibility */
-    @Deprecated
-    public void showSearchButton() {
-        showEndBarButton();
-    }
-
-    @Deprecated
-    public void hideSearchButton() {
-        hideEndBarButton();
-    }
-
     public boolean isBackButtonShown() {
         return isBackButtonShown;
     }
@@ -572,19 +550,9 @@ public class BeastBar {
         return this;
     }
 
-    @Deprecated
-    public BeastBar hideLeftBarButton() {
-        return hideStartBarButton();
-    }
-
     public BeastBar showStartBarButton() {
         startBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
-    }
-
-    @Deprecated
-    public BeastBar showLeftBarButton() {
-        return showStartBarButton();
     }
 
     public BeastBar hideEndBarButton() {
@@ -592,19 +560,9 @@ public class BeastBar {
         return this;
     }
 
-    @Deprecated
-    public BeastBar hideRightBarButton() {
-        return hideEndBarButton();
-    }
-
     public BeastBar showEndBarButton() {
         endBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
-    }
-
-    @Deprecated
-    public BeastBar showRightBarButton() {
-        return showEndBarButton();
     }
 
     public @NonNull FrameLayout getStartBarButtonContainer() {
@@ -615,29 +573,13 @@ public class BeastBar {
         return startBarButtonLabel;
     }
 
-    @Deprecated
-    public TextView getLeftBarButtonLabel() {
-        return getStartBarButtonLabel();
-    }
-
-
     public BeastBar setStartBarButtonText(String buttonText) {
         startBarButtonLabel.setText(buttonText);
         return this;
     }
 
-    @Deprecated
-    public BeastBar setLeftBarButtonText(String buttonText) {
-        return setStartBarButtonText(buttonText);
-    }
-
     public ImageView getStartBarButtonImageView() {
         return startBarButtonImageView;
-    }
-
-    @Deprecated
-    public ImageView getLeftBarButtonImageView() {
-        return getStartBarButtonImageView();
     }
 
     public BeastBar setStartBarButtonIcon(@DrawableRes int resId) {
@@ -645,32 +587,12 @@ public class BeastBar {
         return this;
     }
 
-    @Deprecated
-    public BeastBar setLeftBarButtonIcon(@DrawableRes int resId) {
-        return setStartBarButtonIcon(resId);
-    }
-
     public BeastBar setStartBarButtonIcon(Drawable drawable) {
         startBarButtonImageView.setImageDrawable(drawable);
         return this;
     }
 
-    @Deprecated
-    public BeastBar setLeftBarButtonIcon(Drawable drawable) {
-        return setStartBarButtonIcon(drawable);
-    }
-
-    /**
-     * Deprecated, use setStartBarButtonOnClickListener(onClickListener) instead
-     * @param onClickListener
-     * @return
-     */
-    @Deprecated
-    public BeastBar setBackIconFunc(@Nullable final onButtonPressListener onClickListener) {
-        return setStartBarButtonOnClickListener(onClickListener);
-    }
-
-    public BeastBar setStartBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
+    public BeastBar setStartBarButtonOnClickListener(@Nullable final View.OnClickListener onClickListener) {
         if (onClickListener == null) {
             if (isBackButtonShown) {
                 isBackButtonShown = false;
@@ -683,7 +605,6 @@ public class BeastBar {
                     }
                 });
                 startBarButtonContainer.startAnimation(back_out);
-                startBarButtonContainer.setOnClickListener(null);
             }
         } else {
             if (!isBackButtonShown) {
@@ -698,19 +619,9 @@ public class BeastBar {
                 });
                 startBarButtonContainer.startAnimation(back_in);
             }
-            startBarButtonContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickListener.onBackPress(titlePopBack());
-                }
-            });
         }
+        startBarButtonContainer.setOnClickListener(onClickListener);
         return this;
-    }
-
-    @Deprecated
-    public BeastBar setLeftBarButtonOnClickListener(@Nullable final onButtonPressListener onClickListener) {
-        return setStartBarButtonOnClickListener(onClickListener);
     }
 
     public TextView getTitleLabel() {
@@ -740,18 +651,8 @@ public class BeastBar {
         return this;
     }
 
-    @Deprecated
-    public BeastBar setRightBarButtonText(String buttonText) {
-        return setEndBarButtonText(buttonText);
-    }
-
     public ImageView getEndBarButtonImageView() {
         return endBarButtonImageView;
-    }
-
-    @Deprecated
-    public ImageView getRightBarButtonImageView() {
-        return getEndBarButtonImageView();
     }
 
     public BeastBar setEndBarButtonIcon(@DrawableRes int resId) {
@@ -759,29 +660,14 @@ public class BeastBar {
         return this;
     }
 
-    @Deprecated
-    public BeastBar setRightBarButtonIcon(@DrawableRes int resId) {
-        return setEndBarButtonIcon(resId);
-    }
-
     public BeastBar setEndBarButtonIcon(Drawable drawable) {
         endBarButtonImageView.setImageDrawable(drawable);
         return this;
     }
 
-    @Deprecated
-    public BeastBar setRightBarButtonIcon(Drawable drawable) {
-        return setEndBarButtonIcon(drawable);
-    }
-
     public BeastBar setEndBarButtonOnClickListener(@Nullable View.OnClickListener onClickListener) {
         endBarButtonContainer.setOnClickListener(onClickListener);
         return this;
-    }
-
-    @Deprecated
-    public BeastBar setRightBarButtonOnClickListener(@Nullable final View.OnClickListener onClickListener) {
-        return setEndBarButtonOnClickListener(onClickListener);
     }
 
     private class enhancedAnimation extends ListenerAnimation {
@@ -887,7 +773,7 @@ public class BeastBar {
     }
 
 
-    public final void onStateInstaceState(Bundle out) {
+    public final void onSaveInstaceState(@NonNull Bundle out) {
         if (mTitle != null) mTitle.onStateInstaceState(out);
         out.putBoolean(TitleStorage.IS_LOGOSHOWN, isCompanyLogoShown);
         out.putBoolean(TitleStorage.IS_SEARCHSHOWN, isSearchButtonShown);
@@ -910,7 +796,5 @@ public class BeastBar {
         if (isTitleShown && mTitle != null) setActionTitle(mTitle.getCurrentTitle());
 
         if (isCompanyLogoShown) showMainLogo();
-
-
     }
 }
