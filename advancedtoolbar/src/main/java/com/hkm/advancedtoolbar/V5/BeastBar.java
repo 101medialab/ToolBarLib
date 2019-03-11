@@ -547,11 +547,13 @@ public class BeastBar {
 
     public BeastBar hideStartBarButton() {
         startBarButtonContainer.setVisibility(View.GONE);
+        isBackButtonShown = true;
         return this;
     }
 
     public BeastBar showStartBarButton() {
         startBarButtonContainer.setVisibility(View.VISIBLE);
+        isBackButtonShown = false;
         return this;
     }
 
@@ -597,27 +599,11 @@ public class BeastBar {
             if (isBackButtonShown) {
                 isBackButtonShown = false;
                 mayCancelAnimation(startBarButtonImageView);
-                back_out.setAnimationListener(new ListenerAnimation() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        startBarButtonContainer.setVisibility(View.INVISIBLE);
-
-                    }
-                });
-                startBarButtonContainer.startAnimation(back_out);
             }
         } else {
             if (!isBackButtonShown) {
                 isBackButtonShown = true;
                 mayCancelAnimation(startBarButtonImageView);
-                back_in.setAnimationListener(new ListenerAnimation() {
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        startBarButtonContainer.setVisibility(View.VISIBLE);
-
-                    }
-                });
-                startBarButtonContainer.startAnimation(back_in);
             }
         }
         startBarButtonContainer.setOnClickListener(onClickListener);
