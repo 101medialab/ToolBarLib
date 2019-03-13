@@ -50,7 +50,6 @@ public class BeastBar {
     private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer;
     private TextView startBarButtonLabel, endBarButtonLabel;
     private ImageView startBarButtonImageView, endBarButtonImageView;
-    private ImageButton mYourFeedButton;
     private Animation
             main_logo_in;
     private Animation main_logo_out;
@@ -58,7 +57,7 @@ public class BeastBar {
     private Animation back_out;
     private Animation back_in_from_right;
     private Animation back_out_to_right;
-    private boolean isCompanyLogoShown, isTitleShown, isBackButtonShown, isSearchButtonShown;
+    private boolean isCompanyLogoShown, isTitleShown, isSearchButtonShown;
     private Builder setup;
     private int leftSide = 0, rightSide = 0;
     private TitleStorage mTitle;
@@ -66,7 +65,7 @@ public class BeastBar {
     public static class Builder {
         private @ToolbarTitleMode int title_line_config = SINGLELINE;
         private int
-                ic_company, ic_search, ic_back, ic_background, ic_yourfeed,
+                ic_company, ic_search, ic_back, ic_background,
                 tb_textsize = 0, tb_title_color = 0,
                 animation_duration_logo = -1,
                 animation_duration = -1;
@@ -109,11 +108,6 @@ public class BeastBar {
 
         public Builder back(@DrawableRes final int res) {
             this.ic_back = res;
-            return this;
-        }
-
-        public Builder yourFeedIcon(@DrawableRes final int res) {
-            this.ic_yourfeed = res;
             return this;
         }
 
@@ -233,7 +227,6 @@ public class BeastBar {
     }
 
     private void init() {
-        isBackButtonShown = false;
         isSearchButtonShown = false;
         View v = LayoutInflater.from(mContext).inflate(R.layout.beastbar, null, false);
         startBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
@@ -245,7 +238,6 @@ public class BeastBar {
         mImage = (ImageView) v.findViewById(R.id.logo_k);
         endBarButtonImageView = (ImageView) v.findViewById(R.id.right_bar_button_image_button);
         startBarButtonImageView = (ImageView) v.findViewById(R.id.left_bar_button_image_view);
-        mYourFeedButton = (ImageButton) v.findViewById(R.id.yourfeed_button);
         this.container.addView(v);
         main_logo_in = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getInAnimation());
         main_logo_out = AnimationUtils.loadAnimation(mContext, animaionset.slideLogo.getOutAnimation());
@@ -286,7 +278,6 @@ public class BeastBar {
                 mtv.setMaxLines(setup.title_line_config);
                 break;
         }
-        mYourFeedButton.setVisibility(View.INVISIBLE);
 
         if (setup.tb_textsize > 0) {
             mtv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimensionPixelSize(setup.tb_textsize));
@@ -314,10 +305,6 @@ public class BeastBar {
 
         if (setup.ic_back != 0) {
             setStartBarButtonIcon(setup.ic_back);
-        }
-
-        if (setup.ic_yourfeed != 0) {
-            mYourFeedButton.setImageResource(setup.ic_yourfeed);
         }
 
         startBarButtonContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -380,46 +367,6 @@ public class BeastBar {
     public void setLogoOnClickListener(View.OnClickListener onClickListener) {
         mImage.setClickable(true);
         mImage.setOnClickListener(onClickListener);
-    }
-
-    public BeastBar toggleYourFeedButton() {
-        if (mYourFeedButton.getVisibility() == View.GONE) {
-            mayCancelAnimation(mYourFeedButton);
-            back_in_from_right.setAnimationListener(new ListenerAnimation() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mYourFeedButton.setVisibility(View.VISIBLE);
-
-                }
-            });
-            mYourFeedButton.startAnimation(back_in_from_right);
-        } else {
-            mayCancelAnimation(mYourFeedButton);
-            back_out.setAnimationListener(new ListenerAnimation() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mYourFeedButton.setVisibility(View.INVISIBLE);
-
-                }
-            });
-            mYourFeedButton.startAnimation(back_out);
-        }
-        return this;
-    }
-
-    public BeastBar hideYourFeedButton() {
-        mYourFeedButton.setVisibility(View.INVISIBLE);
-        return this;
-    }
-
-    public BeastBar showYourFeedButton() {
-        mYourFeedButton.setVisibility(View.VISIBLE);
-        return this;
-    }
-
-    public BeastBar setYourFeedOnClickListener(View.OnClickListener listener) {
-        mYourFeedButton.setOnClickListener(listener);
-        return this;
     }
 
     public BeastBar setFindIconFunc(@Nullable final onButtonPressListener func) {
@@ -529,10 +476,6 @@ public class BeastBar {
         return this;
     }
 
-    public boolean isBackButtonShown() {
-        return isBackButtonShown;
-    }
-
     public boolean isCompanyLogoShown() {
         return isCompanyLogoShown;
     }
@@ -547,13 +490,11 @@ public class BeastBar {
 
     public BeastBar hideStartBarButton() {
         startBarButtonContainer.setVisibility(View.GONE);
-        isBackButtonShown = true;
         return this;
     }
 
     public BeastBar showStartBarButton() {
         startBarButtonContainer.setVisibility(View.VISIBLE);
-        isBackButtonShown = false;
         return this;
     }
 
@@ -594,18 +535,8 @@ public class BeastBar {
         return this;
     }
 
-    public BeastBar setStartBarButtonOnClickListener(@Nullable final View.OnClickListener onClickListener) {
-        if (onClickListener == null) {
-            if (isBackButtonShown) {
-                isBackButtonShown = false;
-                mayCancelAnimation(startBarButtonImageView);
-            }
-        } else {
-            if (!isBackButtonShown) {
-                isBackButtonShown = true;
-                mayCancelAnimation(startBarButtonImageView);
-            }
-        }
+    public BeastBar setStartBarButtonOnClickListener(@Nullable View.OnClickListener onClickListener) {
+        mayCancelAnimation(startBarButtonImageView);
         startBarButtonContainer.setOnClickListener(onClickListener);
         return this;
     }
@@ -764,7 +695,6 @@ public class BeastBar {
         out.putBoolean(TitleStorage.IS_LOGOSHOWN, isCompanyLogoShown);
         out.putBoolean(TitleStorage.IS_SEARCHSHOWN, isSearchButtonShown);
         out.putBoolean(TitleStorage.IS_TITLESHOWN, isTitleShown);
-        out.putBoolean(TitleStorage.IS_BACKSHOWN, isBackButtonShown);
     }
 
 
@@ -774,7 +704,6 @@ public class BeastBar {
         isTitleShown = input.getBoolean(TitleStorage.IS_TITLESHOWN, isTitleShown);
         isCompanyLogoShown = input.getBoolean(TitleStorage.IS_LOGOSHOWN, isCompanyLogoShown);
         isSearchButtonShown = input.getBoolean(TitleStorage.IS_SEARCHSHOWN, isSearchButtonShown);
-        isBackButtonShown = input.getBoolean(TitleStorage.IS_BACKSHOWN, isBackButtonShown);
 
         /**
          * there we can only take care of two features in this library
