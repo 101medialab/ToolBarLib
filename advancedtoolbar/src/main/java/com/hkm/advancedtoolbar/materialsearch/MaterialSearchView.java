@@ -377,13 +377,17 @@ public class MaterialSearchView extends SearchViewBase {
     }
 
     public void setCursorDrawable(int drawable) {
-        try {
-            // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
-            Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
-            f.setAccessible(true);
-            f.set(mSearchSrcTextView, drawable);
-        } catch (Exception ignored) {
-            Log.e("MaterialSearchView", ignored.toString());
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            mSearchSrcTextView.setTextCursorDrawable(drawable);
+        } else {
+            try {
+                // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
+                Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
+                f.setAccessible(true);
+                f.set(mSearchSrcTextView, drawable);
+            } catch (Exception ignored) {
+                Log.e("MaterialSearchView", ignored.toString());
+            }
         }
     }
 

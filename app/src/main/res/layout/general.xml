@@ -84,19 +84,6 @@
                 android:layout_height="wrap_content"
                 android:text="S off" />
 
-            <Button
-                android:id="@+id/show_your_feed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="show your feed"/>
-
-            <Button
-                android:id="@+id/hide_your_feed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="hide your feed"/>
-
-
         </LinearLayout>
     </ScrollView>
 
