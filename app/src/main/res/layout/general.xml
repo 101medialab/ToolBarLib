@@ -84,6 +84,18 @@
                 android:layout_height="wrap_content"
                 android:text="S off" />
 
+            <Button
+                android:id="@+id/showSecondEndButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show 2nd End Button" />
+
+            <Button
+                android:id="@+id/hideSecondEndButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hide 2nd End Button" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -90,7 +90,7 @@ public class SearchCustom implements TextWatcher, TextView.OnEditorActionListene
         wrappedEditText.addTextChangedListener(this);
         wrappedEditText.setOnEditorActionListener(this);
         wrappedSearchCloseBtn = (ImageView) getcustomview.findViewById(R.id.ios_search_close_btn);
-        searchMagnifyIcon = (ImageView) getcustomview.findViewById(R.id.right_bar_button_image_button);
+        searchMagnifyIcon = (ImageView) getcustomview.findViewById(R.id.right_bar_button_first);
         wrappedSearchCloseBtn.setOnClickListener(this);
         wrappedEditText.setEnabled(false);
         wrappedSearchCloseBtn.setEnabled(false);
