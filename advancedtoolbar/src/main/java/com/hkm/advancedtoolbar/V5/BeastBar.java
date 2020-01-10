@@ -49,7 +49,7 @@ public class BeastBar {
     private TextView mtv;
     private ImageView mImage;
     private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer, firstEndBarButtonContainer, secondEndBarButtonContainer;
-    private TextView startBarButtonLabel, endBarButtonLabel;
+    private TextView startBarButtonLabel, firstEndBarTextButton, endBarTextButtonContainer;
     private ImageView startBarButtonImageView, secondEndBarButton, firstEndBarButton;
     private Animation
             main_logo_in;
@@ -244,7 +244,8 @@ public class BeastBar {
         secondEndBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_second_container);
         centerContainer = v.findViewById(R.id.centerContainer);
         startBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
-        endBarButtonLabel = (TextView) v.findViewById(R.id.right_bar_button_label);
+//        endBarButtonLabelContainer = v.findViewById(R.id.right_bar_button_label_container);
+        firstEndBarTextButton = (TextView) v.findViewById(R.id.right_bar_button_label);
         mtv = (TextView) v.findViewById(R.id.ios_actionbar_title);
         mImage = (ImageView) v.findViewById(R.id.logo_k);
         secondEndBarButton = (ImageView) v.findViewById(R.id.right_bar_button_second);
@@ -561,32 +562,44 @@ public class BeastBar {
         return this;
     }
 
-    public BeastBar hideEndBarButton() {
+    public BeastBar hideEndBarButtonContainer() {
         endBarButtonContainer.setVisibility(View.GONE);
         return this;
     }
 
-    public BeastBar showEndBarButton() {
+    public BeastBar showEndBarButtonContainer() {
         endBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
 
     public BeastBar hideFirstEndBarButton() {
-        firstEndBarButtonContainer.setVisibility(View.GONE);
+        firstEndBarButton.setVisibility(View.GONE);
         return this;
     }
 
     public BeastBar showFirstEndBarButton() {
+        showFirstEndBarButtonContainer();
+        firstEndBarTextButton.setVisibility(View.GONE);
+        firstEndBarButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    public BeastBar hideFirstEndBarButtonContainer() {
+        firstEndBarButtonContainer.setVisibility(View.GONE);
+        return this;
+    }
+
+    public BeastBar showFirstEndBarButtonContainer() {
         firstEndBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
 
-    public BeastBar hideSecondEndBarButton() {
+    public BeastBar hideSecondEndBarButtonContainer() {
         secondEndBarButtonContainer.setVisibility(View.GONE);
         return this;
     }
 
-    public BeastBar showSecondEndBarButton() {
+    public BeastBar showSecondEndBarButtonContainer() {
         secondEndBarButtonContainer.setVisibility(View.VISIBLE);
         return this;
     }
@@ -637,19 +650,45 @@ public class BeastBar {
         return endBarButtonContainer;
     }
 
-    public TextView getEndBarButtonLabel() {
-        return endBarButtonLabel;
+    public TextView getFirstEndBarTextButton() {
+        return firstEndBarTextButton;
     }
+
+    public BeastBar setFirstEndBarTextButton(String label) {
+        firstEndBarTextButton.setText(label);
+        return this;
+    }
+
+    public BeastBar hideFirstEndBarTextButton() {
+        firstEndBarTextButton.setVisibility(View.GONE);
+        return this;
+    }
+
+    public BeastBar showFirstEndBarTextButton() {
+        showFirstEndBarButtonContainer();
+        firstEndBarButton.setVisibility(View.GONE);
+        firstEndBarTextButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+//    public TextView getEndBarButtonLabelContainer() {
+//        return endBarButtonLabelContainer;
+//    }
 
     @Deprecated
     public TextView getRightBarButtonLabel() {
-        return getEndBarButtonLabel();
+        return getFirstEndBarTextButton();
     }
 
-    public BeastBar setEndBarButtonText(String buttonText) {
-        endBarButtonLabel.setText(buttonText);
-        return this;
-    }
+//    public BeastBar setEndBarButtonText(String buttonText) {
+//        endBarButtonLabel.setText(buttonText);
+//        return this;
+//    }
+
+//    public BeastBar setEndBarButtonTextOnClickListener(@Nullable View.OnClickListener onClickListener) {
+//        endBarButtonLabelContainer.setOnClickListener(onClickListener);
+//        return this;
+//    }
 
 //    public ImageView getEndBarButtonImageView() {
 //        return firstEndBarButton;

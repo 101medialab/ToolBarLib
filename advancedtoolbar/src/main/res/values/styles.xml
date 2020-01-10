@@ -30,15 +30,7 @@
         <item name="paddingEnd">0dp</item>
     </style>
 
-<!--    <style name="actionButtonhkm" parent="android:style/Widget.Holo.ActionButton">-->
-<!--        <item name="paddingStart">4dp</item>-->
-<!--        <item name="paddingEnd">4dp</item>-->
-<!--        &lt;!&ndash;        <item name="android:scaleType">fitCenter</item>&ndash;&gt;-->
-<!--        <item name="android:adjustViewBounds">true</item>-->
-<!--        <item name="android:src">@mipmap/ic_action_find</item>-->
-<!--        <item name="android:gravity">center_vertical</item>-->
-<!--    </style>-->
-    <style name="actionButtonhkm" parent="Widget.AppCompat.ActionButton">
+    <style name="actionButton" parent="Widget.AppCompat.ActionButton">
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
         <item name="android:paddingStart">8dp</item>
@@ -46,6 +38,15 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:src">@mipmap/ic_action_find</item>
         <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="actionTextButton">
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:layout_marginEnd">16dp</item>
     </style>
 
 

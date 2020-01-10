@@ -23,7 +23,7 @@
 
         <ImageView
             android:id="@id/left_bar_button_image_view"
-            style="@style/actionButtonhkm"
+            style="@style/actionButton"
             android:layout_marginStart="0dp"
             android:paddingStart="0dp"
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
 
                 <ImageView
                     android:id="@id/right_bar_button_second"
-                    style="@style/actionButtonhkm"
+                    style="@style/actionButton"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,45 +80,43 @@
 
                 <ImageView
                     android:id="@id/right_bar_button_first"
-                    style="@style/actionButtonhkm"
+                    style="@style/actionButton"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="2dp"/>
 
+                <TextView
+                    android:id="@+id/right_bar_button_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    style="@style/actionTextButton"
+                    tools:text="Edit"
+                    tools:visibility="visible"/>
+
             </FrameLayout>
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/right_bar_button_label_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end">
-
-            <TextView
-                android:id="@+id/right_bar_button_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:lines="1"
-                android:maxLines="1"
-                android:textAlignment="viewEnd"
-                android:layout_marginEnd="8dp"
-                tools:text="Edit"/>
-
-        </FrameLayout>
-
-<!--        <TextView-->
-<!--            android:id="@+id/right_bar_button_label"-->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/right_bar_button_label_container"-->
 <!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="end|center_vertical"-->
-<!--            android:lines="1"-->
-<!--            android:maxLines="1"-->
-<!--            android:textAlignment="viewEnd"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            tools:text="Details"/>-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="end">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/right_bar_button_label"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="end|center_vertical"-->
+<!--                android:lines="1"-->
+<!--                android:maxLines="1"-->
+<!--                android:textAlignment="viewEnd"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                tools:text="Edit"/>-->
+
+<!--        </FrameLayout>-->
 
     </FrameLayout>
 
