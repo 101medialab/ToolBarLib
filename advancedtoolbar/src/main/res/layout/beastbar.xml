@@ -88,12 +88,13 @@
 
                 <TextView
                     android:id="@+id/right_bar_button_label"
+                    style="@style/actionButton.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:visibility="gone"
-                    style="@style/actionTextButton"
                     tools:text="Edit"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
             </FrameLayout>
 

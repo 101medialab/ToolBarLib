@@ -40,14 +40,23 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="actionTextButton">
-        <item name="android:lines">2</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textAlignment">viewEnd</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_gravity">end|center_vertical</item>
-        <item name="android:layout_marginEnd">16dp</item>
+    <style name="actionButton.Text">
+        <item name="android:src">@null</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:gravity">center</item>
     </style>
+
+<!--    <style name="actionTextButton">-->
+<!--        <item name="android:lines">2</item>-->
+<!--        <item name="android:ellipsize">end</item>-->
+<!--        <item name="android:textAlignment">viewEnd</item>-->
+<!--        <item name="android:gravity">center_vertical</item>-->
+<!--        <item name="android:layout_gravity">end|center_vertical</item>-->
+<!--        <item name="android:layout_marginEnd">14dp</item>-->
+<!--    </style>-->
 
 
 </resources>
