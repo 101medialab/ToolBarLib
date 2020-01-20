@@ -577,6 +577,14 @@ public class BeastBar {
         return this;
     }
 
+    public FrameLayout getFirstEndBarButtonContainer() {
+        return firstEndBarButtonContainer;
+    }
+
+    public FrameLayout getSecondEndBarButtonContainer() {
+        return secondEndBarButtonContainer;
+    }
+
     public BeastBar showFirstEndBarButton() {
         showFirstEndBarButtonContainer();
         firstEndBarTextButton.setVisibility(View.GONE);
