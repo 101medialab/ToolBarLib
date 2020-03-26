@@ -54,6 +54,7 @@ public class TitleStorage {
             IS_LOGOSHOWN = "BB_LOGO_SHOWN",
             IS_BACKSHOWN = "BB_BACK_SHOWN",
             IS_SEARCHSHOWN = "BB_SEARCH_SHOWN",
+            IS_WISHLISTSHOWN = "BB_WISHLIST_SHOWN",
             IS_TITLESHOWN = "BB_TITLE_SHOWN",
             STRINGARRAY = "BB_HISTORY_TITLES";
 

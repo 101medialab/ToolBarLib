@@ -29,6 +29,7 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         bb.companyIcon(R.drawable.starz_logo);
         bb.background(R.drawable.actionbar_bg_dark_black);
         bb.search(R.drawable.ic_find_mg);
+        bb.wishlist(R.drawable.ic_product_wishlist);
         bb.setToolBarTitleSize(R.dimen.tb_title);
         bb.defaultTitle("Wrtie Comment");
         bb.setFontFace(this, "Pacifico.ttf");
@@ -67,6 +68,8 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         Button bs = (Button) findViewById(R.id.b_search); //other function
         Button search_off = (Button) findViewById(R.id.search_off); //other function
         Button search_on = (Button) findViewById(R.id.search_on); //other function
+        Button showSecondEndButton = (Button) findViewById(R.id.showSecondEndButton); //other function
+        Button hideSecondEndButton = (Button) findViewById(R.id.hideSecondEndButton); //other function
         bx.setText("close this App");
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
@@ -77,6 +80,8 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
         bs.setOnClickListener(this);
         search_off.setOnClickListener(this);
         search_on.setOnClickListener(this);
+        showSecondEndButton.setOnClickListener(this);
+        hideSecondEndButton.setOnClickListener(this);
         toolbar.setStartBarButtonOnClickListener(null);
     }
 
@@ -127,6 +132,13 @@ public class BeastBarDemo_v1 extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.search_off:
                 toolbar.setFindIconFunc(null);
+                break;
+            case R.id.showSecondEndButton:
+                toolbar.setSecondEndBarButtonIcon(R.drawable.ic_product_wishlist);
+                toolbar.showSecondEndBarButton();
+                break;
+            case R.id.hideSecondEndButton:
+                toolbar.hideSecondEndBarButton();
                 break;
         }
     }
