@@ -32,14 +32,14 @@
 
         <TextView
             android:id="@+id/left_bar_button_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:lines="1"
             android:maxLines="1"
             android:textAlignment="viewStart"
             android:layout_marginStart="8dp"
-            android:textStyle="bold"
+            style="@style/actionButton.Text"
             tools:text="Back"/>
 
     </FrameLayout>

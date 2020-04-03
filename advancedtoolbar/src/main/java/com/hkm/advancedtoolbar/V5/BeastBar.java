@@ -618,6 +618,13 @@ public class BeastBar {
         return this;
     }
 
+    public BeastBar showSecondEndBarButton() {
+        showSecondEndBarButtonContainer();
+        secondEndBarTextButton.setVisibility(View.GONE);
+        secondEndBarButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
     public BeastBar hideFirstEndBarButtonContainer() {
         firstEndBarButtonContainer.setVisibility(View.GONE);
         return this;
