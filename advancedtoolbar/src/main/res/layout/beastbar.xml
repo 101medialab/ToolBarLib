@@ -46,7 +46,7 @@
 
     <FrameLayout
         android:id="@+id/right_bar_button_container"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:padding="0dp"
@@ -62,7 +62,7 @@
             <FrameLayout
                 android:id="@+id/right_bar_button_second_container"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@id/right_bar_button_second"
@@ -70,28 +70,31 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"/>
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:minWidth="0dp"
+                    tools:visibility="visible"/>
 
                 <TextView
                     style="@style/actionButton.Text"
                     android:id="@+id/right_bar_button_second_label"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="gone"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="8dp"
                     tools:text="Wish List"
-                    tools:visibility="visible"/>
+                    tools:visibility="gone"/>
 
             </FrameLayout>
-
-            <Space
-                android:layout_width="8dp"
-                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/right_bar_button_first_container"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@id/right_bar_button_first"
@@ -99,17 +102,23 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="2dp"/>
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    tools:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/right_bar_button_first_label"
                     style="@style/actionButton.Text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="4dp"
                     android:visibility="gone"
                     tools:text="Edit"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
             </FrameLayout>
 
