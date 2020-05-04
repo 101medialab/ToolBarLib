@@ -1,6 +1,8 @@
 package com.hkm.advancedtoolbar.V5;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -11,10 +13,12 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -49,7 +53,7 @@ public class BeastBar {
     private TextView mtv;
     private ImageView mImage;
     private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer, firstEndBarButtonContainer, secondEndBarButtonContainer;
-    private TextView startBarButtonLabel, firstEndBarTextButton, endBarTextButtonContainer;
+    private TextView startBarButtonLabel, firstEndBarTextButton, endBarTextButtonContainer, secondEndBarTextButton;
     private ImageView startBarButtonImageView, secondEndBarButton, firstEndBarButton;
     private Animation
             main_logo_in;
@@ -70,6 +74,7 @@ public class BeastBar {
                 tb_textsize = 0, tb_title_color = 0,
                 animation_duration_logo = -1,
                 animation_duration = -1;
+        private String searchButtonText, wishListButtonText;
         private Drawable companyIconDrawable = null;
         private Typeface typeface;
         private String title_default;
@@ -107,8 +112,18 @@ public class BeastBar {
             return this;
         }
 
+        public Builder search(final String res) {
+            this.searchButtonText = res;
+            return this;
+        }
+
         public Builder wishlist(@DrawableRes final int res) {
             this.ic_wishlist = res;
+            return this;
+        }
+
+        public Builder wishlist(final String res) {
+            this.wishListButtonText = res;
             return this;
         }
 
@@ -245,7 +260,8 @@ public class BeastBar {
         centerContainer = v.findViewById(R.id.centerContainer);
         startBarButtonLabel = (TextView) v.findViewById(R.id.left_bar_button_label);
 //        endBarButtonLabelContainer = v.findViewById(R.id.right_bar_button_label_container);
-        firstEndBarTextButton = (TextView) v.findViewById(R.id.right_bar_button_label);
+        firstEndBarTextButton = (TextView) v.findViewById(R.id.right_bar_button_first_label);
+        secondEndBarTextButton = (TextView) v.findViewById(R.id.right_bar_button_second_label);
         mtv = (TextView) v.findViewById(R.id.ios_actionbar_title);
         mImage = (ImageView) v.findViewById(R.id.logo_k);
         secondEndBarButton = (ImageView) v.findViewById(R.id.right_bar_button_second);
@@ -302,8 +318,18 @@ public class BeastBar {
             isSearchButtonShown = true;
         }
 
+        if (!TextUtils.isEmpty(setup.searchButtonText)) {
+            setFirstEndBarTextButton(setup.searchButtonText);
+            isSearchButtonShown = true;
+        }
+
         if (setup.ic_wishlist != 0) {
             setSecondEndBarButtonIcon(setup.ic_wishlist);
+            isWishlistButtonShown = true;
+        }
+
+        if (!TextUtils.isEmpty(setup.wishListButtonText)) {
+            setSecondEndBarTextButton(setup.wishListButtonText);
             isWishlistButtonShown = true;
         }
 
@@ -592,6 +618,13 @@ public class BeastBar {
         return this;
     }
 
+    public BeastBar showSecondEndBarButton() {
+        showSecondEndBarButtonContainer();
+        secondEndBarTextButton.setVisibility(View.GONE);
+        secondEndBarButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
     public BeastBar hideFirstEndBarButtonContainer() {
         firstEndBarButtonContainer.setVisibility(View.GONE);
         return this;
@@ -667,6 +700,12 @@ public class BeastBar {
         return this;
     }
 
+    public TextView getSecondEndBarTextButton() { return secondEndBarTextButton; }
+    public BeastBar setSecondEndBarTextButton(String label) {
+        secondEndBarTextButton.setText(label);
+        return this;
+    }
+
     public BeastBar hideFirstEndBarTextButton() {
         firstEndBarTextButton.setVisibility(View.GONE);
         return this;
@@ -676,6 +715,18 @@ public class BeastBar {
         showFirstEndBarButtonContainer();
         firstEndBarButton.setVisibility(View.GONE);
         firstEndBarTextButton.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    public BeastBar hideSecondEndBarTextButton() {
+        secondEndBarTextButton.setVisibility(View.GONE);
+        return this;
+    }
+
+    public BeastBar showSecondEndBarTextButton() {
+        showSecondEndBarButtonContainer();
+        secondEndBarButton.setVisibility(View.GONE);
+        secondEndBarTextButton.setVisibility(View.VISIBLE);
         return this;
     }
 
