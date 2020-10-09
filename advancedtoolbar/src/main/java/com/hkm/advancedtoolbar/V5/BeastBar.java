@@ -30,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hkm.advancedtoolbar.R;
@@ -52,6 +53,7 @@ public class BeastBar {
     private Toolbar container;
     private TextView mtv;
     private ImageView mImage;
+    private RelativeLayout toolbarContainer;
     private FrameLayout startBarButtonContainer, endBarButtonContainer, centerContainer, firstEndBarButtonContainer, secondEndBarButtonContainer;
     private TextView startBarButtonLabel, firstEndBarTextButton, endBarTextButtonContainer, secondEndBarTextButton;
     private ImageView startBarButtonImageView, secondEndBarButton, firstEndBarButton;
@@ -253,6 +255,7 @@ public class BeastBar {
         isSearchButtonShown = false;
         isWishlistButtonShown = false;
         View v = LayoutInflater.from(mContext).inflate(R.layout.beastbar, null, false);
+        toolbarContainer = (RelativeLayout) v.findViewById(R.id.ios_background);
         startBarButtonContainer = (FrameLayout) v.findViewById(R.id.left_bar_button_container);
         endBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_container);
         firstEndBarButtonContainer = (FrameLayout) v.findViewById(R.id.right_bar_button_first_container);
@@ -610,6 +613,8 @@ public class BeastBar {
     public FrameLayout getSecondEndBarButtonContainer() {
         return secondEndBarButtonContainer;
     }
+
+    public RelativeLayout getToolbarContainer() { return toolbarContainer; }
 
     public BeastBar showFirstEndBarButton() {
         showFirstEndBarButtonContainer();
